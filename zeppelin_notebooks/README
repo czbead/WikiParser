@@ -1,1 +1,2 @@
-Tbis is the runnable zeppelin notebooks of the Spark Wikipedia Parsing Data Science Pipeline 
+Tbis is the runnable zeppelin notebooks of the Spark Wikipedia Parsing Data Science Pipeline. Need to have you wikipedia dump and hadoop cluster ready. 
+To read the notebook, please open it in local zeppelin or online zeppelin notebook viewer -- https://app.zepl.com/explore
