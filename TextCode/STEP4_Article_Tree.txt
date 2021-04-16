@@ -1,0 +1,276 @@
+%spark
+import org.apache.spark.sql.SparkSession
+val spark = SparkSession.builder.getOrCreate()
+val wk_text = spark.read.parquet("hdfs://localhost:9000/data/wk_text_parquet/")
+wk_text.printSchema
+wk_text.show
+
+
+
+%spark
+import scala.collection.mutable.ListBuffer
+
+def parseHead(): (String => (List[String], List[(String, Int)], List[Int])) = { str =>
+    if (null == str) {
+        (null, null, null)
+    } else {
+        val hdLst = new ListBuffer[String]()
+        val tuLst = new ListBuffer[(String, Int)]()
+        val numLst = new ListBuffer[Int]()
+        
+        str.split("\n").foreach { line =>
+            val s = line.trim
+            if (s.startsWith("==") && s.endsWith("==")) {
+                val len = s.size
+                var l = 0
+                var r = len-1
+                while (l < r && ((s.charAt(l) == '=') || s.charAt(r) == '=')) {
+                    if (s.charAt(l) == '=') {
+                        l += 1
+                    } else {
+                        r -= 1
+                    }
+                }
+                val head = s.slice(l, r+1).trim
+                if (l == len-1-r && l < 8 && head != "") {
+                    val level = l
+                    hdLst.append(s)
+                    tuLst.append((head, level))
+                    numLst.append(level)
+                }
+            }
+        }
+        
+        val hdList = if (hdLst.isEmpty) null else hdLst.toList
+        val tuList = if (tuLst.isEmpty) null else tuLst.toList
+        val numList = if (numLst.isEmpty) null else numLst.toList
+        (hdList, tuList, numList)
+    }
+}
+
+import scala.collection.mutable.WrappedArray
+
+def checkBadTree(): (WrappedArray[Integer] => Boolean) = { arr =>
+    if (null == arr) {
+        false
+    } else {
+        if (arr.isEmpty) {
+            false 
+        } else {
+            var isbad = false
+            var pre = arr(0)
+            var cur = arr(0)
+            for (i <- arr) {
+                cur = i
+                if (cur < 2 || cur > 6) {
+                    isbad = true
+                }
+                if (cur - pre > 1) {
+                    isbad = true
+                }
+                pre = cur
+            }
+            isbad
+        }
+    }
+}
+
+import scala.collection.mutable.ListBuffer 
+import org.json4s._ 
+import org.json4s.jackson.Serialization 
+import org.json4s.jackson.Serialization.write 
+import org.json4s.JsonDSL._ 
+import org.json4s.jackson.JsonMethods._ 
+import scala.collection.mutable.Map 
+import org.apache.spark.sql.Row
+
+def buildTree(): (WrappedArray[Row] => (scala.collection.immutable.Map[String, List[String]], String, Int)) = { arr =>    
+    if (null == arr) {        
+        null    
+    } else if (arr.isEmpty) {        
+        null    
+    } else {        
+        val lstOfTu = arr.map(row => {            
+            (row.getAs[String](0), row.getAs[Int](1))        
+        }).toList        
+        val lstOfLevel = lstOfTu.map(_._2).toList
+        var mutableMap = scala.collection.mutable.Map[String, ListBuffer[String]]()                
+        var curPar = lstOfLevel.head
+        var parKey = ""        
+        var key = ""        
+        var preTu = ("", 0)        
+        for ((hd, le) <- lstOfTu) {            
+            key = hd + '-' + (le-1)            
+            if (!mutableMap.contains(key)) {                
+                mutableMap += (key -> ListBuffer[String]())           
+            }            
+            if (le == curPar) {                
+                parKey = key            
+            } else if (le == curPar + 1) {                
+                mutableMap(parKey).append(key)            
+            } else if (le > curPar + 1) {                
+                val (preHd, preLe) = preTu                
+                curPar = preLe                
+                parKey = preHd + '-' + (preLe-1)                
+                mutableMap(parKey).append(key)        
+            } else {  //le < curPar                
+                curPar = le                
+                parKey = key           
+            }            
+            preTu = (hd, le)        
+        }                
+        val rstMap = mutableMap.map{ case (k, v) => {            
+            val l = v.toList            
+            if (l.isEmpty) {                
+                (k, null)            
+            } else {                
+                (k, l)            
+            }        
+        }}.toMap        
+        val amt = rstMap.size        
+        implicit val formats = DefaultFormats        
+        val rstStr = write(rstMap)        
+        (rstMap, rstStr, amt)    
+    } 
+} 
+
+
+val parseHeadUDF = udf(parseHead)
+
+val checkBadTreeUDF = udf(checkBadTree)
+
+val buildTreeUDF = udf(buildTree)
+
+
+
+%spark
+import scala.collection.mutable.ListBuffer 
+import org.apache.spark.sql.Row
+
+def splitByVal(lst: List[(String, Int)], splitVal: Int): List[(String, List[String])] = {
+    val rst = ListBuffer[(String, List[String])]()
+    
+    val parentL = splitVal
+    val childL = parentL + 1
+    var hasPar = false
+    var key = ""
+    var value = ListBuffer[String]()
+    for ((hd, le) <- lst) {
+        if (hasPar) {
+            if (le == parentL) {
+                if (value.isEmpty) {
+                    rst += ((key, null))
+                } else {
+                    rst += ((key, value.toList))
+                }
+                key = hd + "-" + (le - 1)
+                value.clear
+            } else { //child
+                value += hd + "-" + (le - 1)
+            }
+        } else {
+            if (le == parentL) {
+                hasPar = true
+                key = hd + "-" + (le - 1)
+            }
+        }
+    }
+    
+    if (hasPar) {
+        if (value.isEmpty) {
+            rst += ((key, null))
+        } else {
+            rst += ((key, value.toList))
+        }
+    }
+    
+    rst.toList
+}
+
+import org.json4s._
+import org.json4s.jackson.Serialization
+import org.json4s.jackson.Serialization.write
+import org.json4s.JsonDSL._
+import org.json4s.jackson.JsonMethods._
+
+
+def buildTree(): (WrappedArray[Row] => (scala.collection.immutable.Map[String, List[String]], String, Int)) = { arr =>
+    if (null == arr) {
+        null
+    } else if (arr.isEmpty) {
+        null
+    } else {
+        var rstTuLst = ListBuffer[(String, List[String])]()
+        
+        val lstOfTu = arr.map(row => {
+            (row.getAs[String](0), row.getAs[Int](1))
+        }).toList
+        val levelLst = lstOfTu.map(_._2)
+        
+        val reverseLst = lstOfTu.reverse
+        val maxLevel = levelLst.max
+        
+        var curLevel = maxLevel
+        var parentLevel = curLevel - 1
+        var childs = ListBuffer[String]()
+        var childStart = false
+        
+        //build the left level first
+        val maxLevTu = lstOfTu.filter(_._2 == maxLevel)
+        var key = ""
+        val leafLevTu = maxLevTu.map(e => {
+            key = e._1 + "-" + (e._2 - 1)
+            (key, null)
+        })
+        rstTuLst ++= leafLevTu
+        
+        while (curLevel > 2) {
+            parentLevel = curLevel - 1
+            val associatedHdLst = lstOfTu.filter(r => {
+                val lev = r._2
+                lev == curLevel || lev == parentLevel
+            })
+            val levTuLst = splitByVal(associatedHdLst, parentLevel)
+            rstTuLst ++= levTuLst
+            curLevel -= 1
+        }
+        
+        val rstMap = rstTuLst.toMap
+        val amt = rstMap.size
+        implicit val formats = DefaultFormats
+        val rstStr = write(rstMap)
+        (rstMap, rstStr, amt)
+    }
+}
+
+val buildTreeUDF = udf(buildTree)
+
+
+
+%spark
+val wk_head = wk_text.withColumn("rsts", parseHeadUDF($"rev_text")).select($"id", $"rsts._1".alias("hdstr"), $"rsts._2".alias("hdtu"), $"rsts._3".alias("level"))
+
+val wk_badtree = wk_head.withColumn("badtree", checkBadTreeUDF($"level"))
+wk_badtree.printSchema
+wk_badtree.show
+
+val wk_tree = wk_badtree.withColumn("rst", buildTreeUDF($"hdtu")).select($"id", $"hdstr", $"hdtu", $"level", $"badtree", $"rst._1".alias("tree_map"), $"rst._2".alias("tree_json"), $"rst._3".alias("tree_amt"))
+wk_tree.printSchema
+wk_tree.show
+
+
+
+%spark
+// wk_tree.select($"hdstr", $"hdtu", $"level").show(false)
+
+// val testBadTree = wk_tree.select($"hdtu", $"level", $"badtree").filter($"badtree" =!= false)
+// testBadTree.show(false)
+// println(testBadTree.count)
+
+val checkTree = wk_tree.select("tree_json", "tree_map", "tree_amt").show(false)
+// wk_tree.count
+
+
+
+%spark
+wk_tree.write.mode("overwrite").parquet("hdfs://localhost:9000/data/wk_tree_parquet/")

@@ -1,0 +1,80 @@
+%spark
+import org.apache.spark.sql.SparkSession
+val spark = SparkSession.builder.getOrCreate()
+val wk_hasbox = spark.read.parquet("hdfs://localhost:9000/data/wk_hasbox_parquet/")
+wk_hasbox.printSchema
+
+val wk_merged = spark.read.parquet("hdfs://localhost:9000/data/wk_merged_parquet/")
+val wk_redirect = spark.read.parquet("hdfs://localhost:9000/data/wk_redirect_parquet/")
+
+
+
+%spark
+val wk_hasbox1 = wk_hasbox.withColumn("ibox_temp_str", concat_ws("_", $"ibox_temp"))
+val wk_merged1 = wk_merged.withColumn("cate_val_str", concat_ws("_", $"cate_val"))
+
+
+
+%spark
+import org.apache.spark.sql.DataFrame
+import org.apache.spark.sql.Row
+import org.apache.spark.sql.functions.{lower, upper}
+
+
+def getTopicDataset(topic: String, df: DataFrame, colName: String): DataFrame = { 
+    val rstDF = df.filter(array_contains(col(colName), topic.trim.toLowerCase))
+    // rstDF.printSchema
+    println("Number of %s topic article (strict search) found:  %d".format(topic, rstDF.count))
+    return rstDF
+}
+
+def getTopicDatasetWide(topic: String, df: DataFrame, colName: String): DataFrame = {
+    val rstDF = df.filter(col(colName).contains(topic.trim.toLowerCase))
+    println("Number of %s topic article (wide search) found:  %d".format(topic, rstDF.count))
+    return rstDF
+}
+
+def searchRealArticle(title: String, colName: String): DataFrame = {
+    val input = title.toLowerCase
+    val aDF = wk_merged.filter(lower($"title") === input)
+    if (aDF.rdd.isEmpty) {
+        println("Article with %s title doesn't exist in the dump. ".format(title))
+        return null
+    } 
+    if (null == colName || "" == colName.trim) {
+        aDF.show(false)
+    } else if (aDF.columns.contains(colName)) {
+        println(aDF.select(col(colName)).first.getString(0))
+    } else {
+        println("Article found but required column %s not exist in the dataset. ".format(colName))
+    }
+    return aDF
+}
+
+def getArticle(title: String, colName: String): DataFrame = {
+    val input = title.toLowerCase
+    val rDF = wk_redirect.filter(lower($"title") === input)
+    if (rDF.rdd.isEmpty) {
+        println("The article %s is not a redirect article. Please wait for the search result".format(title))
+        
+        return searchRealArticle(title, colName)
+    } else {
+        println("The article %s is a redirect article. Please wait for the real article".format(title))
+        val realTitle = rDF.select($"redirect").first.getString(0)
+        return searchRealArticle(realTitle, colName)
+    }
+}
+
+
+
+
+%spark
+// val getBooks = getTopicDataset("book", wk_hasbox, "ibox_temp")
+val getHistory1 = getTopicDataset("history", wk_merged1, "cate_val")
+val getHistory2 = getTopicDatasetWide("history", wk_merged1, "cate_val_str")
+val getOrg1 = getTopicDataset("organization", wk_hasbox1, "ibox_temp")
+val getOrg2 = getTopicDatasetWide("organization", wk_hasbox1, "ibox_temp_str")
+
+// val getRealArticle = getArticle("Anarchism", "tree_json")  
+// val getRedirectArticle = getArticle("AssistiveTechnology", "title") 
+// val getArticleCase = getArticle("Serverless computing", "tree_json")

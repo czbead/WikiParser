@@ -1,0 +1,189 @@
+%spark
+import org.apache.spark.sql.SparkSession
+
+val spark = SparkSession.builder.getOrCreate()
+val wk_text = spark.read.parquet("hdfs://localhost:9000/data/wk_text_parquet/")
+wk_text.printSchema
+wk_text.show
+
+
+%spark
+import scala.collection.mutable.ListBuffer
+
+def parsePattern(): (String => (Boolean, List[String], List[String], List[String], List[String])) = { text =>
+	if (null == text) {
+		(false, null, null, null, null)
+	} else {
+		var str = text.trim
+		val leng = str.size
+
+		val doubleBracePat = new ListBuffer[String]()
+		val doubleBracketPat = new ListBuffer[String]()
+		val bracePipePat = new ListBuffer[String]()
+		val commentPat = new ListBuffer[String]()
+		var count = 0
+		var started = false
+		var patternFrom = 0
+		var patternTo = leng - 1
+		var pattern = ""
+		var endSign = ""
+		var startSign = ""
+		var cur = ""
+		var index = 0
+		while (index < leng -1) {
+			cur = str.slice(index, index + 2)
+			if (started) {
+				if (cur == startSign) {
+					count += 1
+				}
+				if (cur == endSign) {
+					count -= 1
+				}
+
+				if (count == 0) {
+					patternTo = index
+					pattern = str.slice(patternFrom, patternTo + 2)
+					if (startSign == "{{") {
+					    doubleBracePat.append(pattern)
+					} else if (startSign == "[[") {
+					    doubleBracketPat.append(pattern)
+					} else if (startSign == "{|") {
+					    bracePipePat.append(pattern)
+					} else {
+					    commentPat.append(pattern)
+					}
+					started = false
+				}
+
+			} else {
+				if (cur == "{{" || cur == "[[" || cur == "{|" || cur == "<!") {
+					started = true
+					patternFrom = index
+					count += 1
+					if (cur == "{{") {
+						startSign = "{{"
+						endSign = "}}"
+					} else if (cur == "[[") {
+						startSign = "[["
+						endSign = "]]"
+					} else if (cur == "{|") {
+						startSign = "{|"
+						endSign = "|}"
+					} else {
+						startSign = "<!"
+						endSign = "->"
+					}
+				}
+			}
+			index += 1
+		}
+        
+		val dBraceLst = if (doubleBracePat.isEmpty) null else doubleBracePat.toList
+		val dBracketLst = if (doubleBracketPat.isEmpty) null else doubleBracketPat.toList
+		val bracePipeLst = if (bracePipePat.isEmpty) null else bracePipePat.toList
+		val commentLst = if (commentPat.isEmpty) null else commentPat.toList
+
+		if (started) {
+		    (true, dBraceLst, dBracketLst, bracePipeLst, commentLst)
+		} else {
+			(false, dBraceLst, dBracketLst, bracePipeLst, commentLst)
+		}
+		
+	}
+}
+
+import scala.collection.mutable.WrappedArray
+import scala.util.matching.Regex
+def parseSTStr(p1: Regex, p2: Regex, p3: Regex): (WrappedArray[String] => (List[String], List[String], List[String], List[String])) = { strs =>
+	if (null == strs) {
+		(null, null, null, null)
+	} else {
+	    val mainSt1 = new ListBuffer[String]()
+	    val mainSt2 = new ListBuffer[String]()
+	    val oneline = new ListBuffer[String]()
+	    val other = new ListBuffer[String]()
+
+		strs.foreach { str =>
+		    val arr = str.trim.split("\n|\r", 2)
+	        val s = arr(0).trim.toLowerCase
+	        s match {
+		        case p1(_*) => mainSt1.append(str)
+		        case p2(_*) => mainSt2.append(str)
+		        case p3(_*) => oneline.append(str)
+		        case _    => other.append(str)
+	        }
+		}
+
+		val mainSt1Lst = if (mainSt1.isEmpty) null else mainSt1.toList
+		val mainSt2Lst = if (mainSt2.isEmpty) null else mainSt2.toList
+		val onelineLst = if (oneline.isEmpty) null else oneline.toList
+		val otherLst = if (other.isEmpty) null else other.toList
+		
+		(mainSt1Lst, mainSt2Lst, onelineLst, otherLst)
+	}
+} 
+
+
+val parsePatternUDF = udf(parsePattern)
+
+val infoboxPa = "\\{\\{(\\s*)infobox.*".r
+val citePa = "\\{\\{(\\s*)(cite|citation).*".r
+val dBrace1Pa = "\\{\\{.*\\}\\}".r
+val parseDBraceUDF = udf(parseSTStr(infoboxPa, citePa, dBrace1Pa))
+
+val categoryPa = "\\[\\[(\\s*)category:.*".r
+val filePa = "\\[\\[(\\s*)file:.*".r
+val dBracket1Pa = "^((?!:).)*$".r
+val parseDBracketUDF = udf(parseSTStr(categoryPa, filePa, dBracket1Pa))
+
+val wikitablePa = ".*class(\\s*)=.*wikitable.*".r
+val tableboxPa = ".*class(\\s*)=.*infobox.*".r
+val bPipe1Pa = "\\{\\|.*\\|\\}".r
+val parseBPipeUDF = udf(parseSTStr(wikitablePa, tableboxPa, bPipe1Pa))
+
+
+%spark
+val wk_pattern = wk_text.withColumn("patterns", parsePatternUDF($"rev_text")).select($"id", $"rev_text", $"patterns._1".alias("unclose"), $"patterns._2".alias("dbrace"), $"patterns._3".alias("dbracket"), $"patterns._4".alias("bpipe"), $"patterns._5".alias("cmt"))
+wk_pattern.printSchema
+wk_pattern.show
+
+val wk_dbrace = wk_pattern.withColumn("sts", parseDBraceUDF($"dbrace")).select($"id", $"unclose", $"dbrace", $"dbracket", $"bpipe", $"cmt", $"sts._1".alias("ibox"), $"sts._2".alias("cite"), $"sts._3".alias("dbrace1"), $"sts._4".alias("dbrace0"))
+wk_dbrace.printSchema
+wk_dbrace.show
+
+val wk_dbracket = wk_dbrace.withColumn("sts", parseDBracketUDF($"dbracket")).select($"id", $"unclose", $"dbrace", $"dbracket", $"bpipe", $"cmt", $"ibox", $"cite", $"dbrace1", $"dbrace0", $"sts._1".alias("cate"), $"sts._2".alias("file"), $"sts._3".alias("dbraket1"), $"sts._4".alias("dbracket0"))
+wk_dbracket.printSchema
+wk_dbracket.show
+
+val wk_bpipe = wk_dbracket.withColumn("sts", parseBPipeUDF($"bpipe")).select($"id", $"unclose", $"dbrace", $"dbracket", $"bpipe", $"cmt", $"ibox", $"cite", $"dbrace1", $"dbrace0", $"cate", $"file", $"dbraket1", $"dbracket0", $"sts._1".alias("wtable"), $"sts._2".alias("tbox"), $"sts._3".alias("bpipe1"), $"sts._4".alias("bpipe0"))
+wk_bpipe.printSchema
+wk_bpipe.show
+
+val wk_rawst = wk_bpipe
+wk_rawst.explain
+
+
+%spark
+// wk_bpipe.select($"dbrace").show(false)
+// wk_bpipe.select($"dbracket").show(false)
+// wk_bpipe.select($"bpipe").show(false)
+// wk_bpipe.select($"cmt").show(false)
+
+wk_bpipe.select($"ibox").show(false)
+// wk_bpipe.select($"cite").show(false)
+// wk_bpipe.select($"dbrace1").show(false)
+// wk_bpipe.select($"dbrace0").show(false)
+
+// wk_bpipe.select($"cate").show(false)
+// wk_bpipe.select($"file").show(false)
+// wk_bpipe.select($"dbraket1").show(false)
+// wk_bpipe.select($"dbracket0").show(false)
+
+// wk_bpipe.select($"wtable").show(false)
+// wk_bpipe.select($"tbox").filter($"tbox".isNotNull).show(false)
+// wk_bpipe.select($"bpipe1").filter($"bpipe1".isNotNull).show(false)
+// wk_bpipe.select($"bpipe0").filter($"bpipe0".isNotNull).show(false)
+
+
+%spark
+wk_rawst.write.mode("overwrite").parquet("hdfs://localhost:9000/data/wk_rawst_parquet/")

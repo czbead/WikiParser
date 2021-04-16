@@ -1,0 +1,136 @@
+%spark
+import org.apache.spark.sql.SparkSession
+val spark = SparkSession.builder.getOrCreate()
+
+val wk_raw = spark.read.parquet("hdfs://localhost:9000/data/wk_raw_parquet/")
+val wk_merged = spark.read.parquet("hdfs://localhost:9000/data/wk_merged_parquet/")
+val wk_hasbox = spark.read.parquet("hdfs://localhost:9000/data/wk_hasbox_parquet/")
+val wk_org = spark.read.parquet("hdfs://localhost:9000/data/wk_org_parquet/")
+
+val total = wk_raw.count
+val uniCnt = wk_merged.count
+val boxCnt = wk_hasbox.count
+val orgCnt = wk_org.count
+
+println("total count:  " + total)
+println("article count:  " + uniCnt)
+println("article having infobox count: " + boxCnt)
+println("organization count: " + orgCnt)
+
+wk_merged.printSchema
+z.show(wk_merged)
+
+
+
+
+%spark
+def ratioCal(up: Long, down: Long): Double = {
+    math.round((up / down.toDouble) * 10000) / 10000.0
+}
+
+
+//Unique Article Ratio
+val uniRatio = ratioCal(uniCnt, total)
+
+//bad article tree ratio
+val badTree = wk_merged.filter($"badtree" =!= false)
+val badTreeCnt = badTree.count
+val badTreeRatio = ratioCal(badTreeCnt, uniCnt)
+
+//unclosed pattern ratio
+val unclosed = wk_merged.filter($"unclose" === true) 
+val unclosedCnt = unclosed.count 
+val uncloseRatio = ratioCal(unclosedCnt, uniCnt)
+
+//article that has infobox structure ratio
+val infoStRate = ratioCal(boxCnt, uniCnt)
+
+//article that has category structure ratio
+val cateSt = wk_merged.filter($"cate".isNotNull) 
+val cateStCnt = cateSt.count 
+val cateStRatio = ratioCal(cateStCnt, uniCnt)
+
+//article that has wikitable structure ratio
+val wikitabSt = wk_merged.filter($"wtable".isNotNull) 
+val wikitabStCnt = wikitabSt.count 
+val wikitabStRatio = ratioCal(wikitabStCnt, uniCnt)
+
+//article that has tablebox structure ratio
+val taboxSt = wk_merged.filter($"tbox".isNotNull) 
+val taboxStCnt = taboxSt.count 
+val taboxStRatio = ratioCal(taboxStCnt, uniCnt) 
+
+//article that has comment structure ratio
+val cmtSt = wk_merged.filter($"cmt".isNotNull) 
+val cmtStCnt = cmtSt.count 
+val cmtStRatio = ratioCal(cmtStCnt, uniCnt)
+
+//article that has citation structure ratio
+val citeSt = wk_merged.filter($"cite".isNotNull)
+val citeCnt = citeSt.count
+val citeStRatio = ratioCal(citeCnt, uniCnt)
+
+//article that has file structure ratio
+val fileSt = wk_merged.filter($"file".isNotNull)
+val fileCnt = fileSt.count
+val fileStRatio = ratioCal(fileCnt, uniCnt)
+
+//orgnization infobox with a parent field ratio
+val orgWithPar = wk_org.filter($"orgPar".isNotNull)
+val orgWithParCnt = orgWithPar.count 
+val orgWithParentRate = ratioCal(orgWithParCnt, orgCnt)
+
+
+println("Unique Article Ratio:  " + uniRatio)
+println("Bad article tree Ratio:  " + badTreeRatio)
+println("Unclosed pattern case Ratio:  " + uncloseRatio)
+println("Article having Infobox Ratio:  " + infoStRate)
+println("Article having Category Ratio:  " + cateStRatio)
+println("Article having Wikitable Ratio:  " + wikitabStRatio)
+println("Article having Tablebox Ratio:  " + taboxStRatio)
+println("Article having Comment Ratio:  " + cmtStRatio)
+println("Article having Citation Ratio:  " + citeStRatio)
+println("Article having File Ratio:  " + fileStRatio)
+
+println("Organization aticle having parent field Ratio:  " + orgWithParentRate + "\n\n")
+
+
+
+
+%spark
+import scala.collection.immutable.ListMap
+import org.apache.spark.sql.Dataset
+import org.apache.spark.sql.DataFrame
+import scala.collection.immutable.Map
+
+def listColToSortedMap(df: DataFrame, colName: String): ListMap[String, Int] = {
+    val notNullDf = df.filter(col(colName).isNotNull)
+    val arrOfSeq = df.select(col(colName)).rdd.map(r => r(0).asInstanceOf[Seq[String]]).collect()
+    val flatLst = arrOfSeq.filter(x => x != null && !x.isEmpty).flatten
+    val map = flatLst.groupBy(identity).mapValues(_.size)
+    val descSortedMap = ListMap(map.toSeq.sortWith(_._2 > _._2):_*)
+    return descSortedMap
+} 
+
+
+val templateDescSortedMap = listColToSortedMap(wk_hasbox, "ibox_temp")
+val templateKey = templateDescSortedMap.keys
+val wk_iboxtemp = templateDescSortedMap.toSeq.toDF("ibox_template", "count")
+println("The number of unique infobox template:  " + templateKey.size)
+println(templateKey + "\n\n")
+z.show(wk_iboxtemp)
+
+
+// val categoryDescSortedMap = listColToSortedMap(wk_hasbox, "cate_val")
+// val wk_category = categoryDescSortedMap.toSeq.toDF("category", "count")
+// val categoryKey = categoryDescSortedMap.keys
+// println("The number of unique category:  " + categoryKey.size)
+// println(categoryKey + "\n\n")
+// println(categoryKey + "\n\n")
+
+
+
+
+%spark
+wk_iboxtemp.write.mode("overwrite").parquet("hdfs://localhost:9000/data/wk_iboxtemp_parquet/") 
+// wk_category.write.mode("overwrite").parquet("hdfs://localhost:9000/data/wk_category_parquet/") 

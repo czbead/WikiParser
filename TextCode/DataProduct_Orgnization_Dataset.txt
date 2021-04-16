@@ -1,0 +1,92 @@
+%spark
+import org.apache.spark.sql.SparkSession
+val spark = SparkSession.builder.getOrCreate()
+val wk_hasbox = spark.read.parquet("hdfs://localhost:9000/data/wk_hasbox_parquet/")
+wk_hasbox.printSchema
+wk_hasbox.show
+
+
+
+%spark
+import scala.collection.mutable.WrappedArray
+
+def tagTopic(topic: String): (WrappedArray[String] => Boolean) = { temps =>
+	var flag = false
+	if (null == temps) {
+		false
+	} else {
+		for (i <- temps) {
+			if (i contains topic) {
+				flag = true
+			}
+		}
+		flag
+	}
+}
+
+import org.json4s._
+import org.json4s.jackson.Serialization.{read, write}
+import org.json4s.jackson.JsonMethods._
+import scala.collection.immutable.{Map => ImmutableMap}
+
+def getField(field: String): (WrappedArray[String] => List[String]) = { jsonStrs =>
+	if (null == jsonStrs) {
+		null
+	} else {
+		implicit val formats = DefaultFormats
+		val valLst = jsonStrs.toList.map( jsonStr => {
+		    if (null == jsonStr || "" == jsonStr.trim) {
+		        null
+		    } else {
+		        val iBoxMap = parse(jsonStr).extract[ImmutableMap[String, String]]
+		        if (iBoxMap.contains(field)) {
+		            iBoxMap(field).replaceAll("'", "")
+		        } else {
+		            null
+		        }
+		    }
+		})
+		
+		if (valLst.count(_ == null)+valLst.count(_ == "") == valLst.size || valLst.isEmpty) null else valLst
+	}
+}
+
+
+val topic = "organization"
+val tagOrgUDF = udf(tagTopic(topic))
+
+val parentField = "parent_organization"
+val getParentUDF = udf(getField(parentField))
+//get infobox name
+
+
+
+%spark
+val wk_tagorg = wk_hasbox.withColumn("isOrg", tagOrgUDF($"ibox_temp"))
+val wk_org_loose = wk_tagorg.filter($"isOrg" === true)
+val wk_orgpar = wk_org_loose.withColumn("orgPar", getParentUDF($"ibox_json"))
+val wk_org_strict = wk_orgpar.filter(array_contains($"ibox_temp", "organization"))
+
+val wk_org = wk_orgpar
+wk_org.printSchema
+wk_org.show
+
+
+
+%spark
+val testLooseOrg = wk_org.select($"ibox_temp", $"ibox_name", $"orgPar", $"isOrg")
+testLooseOrg.show(false)
+
+val testStrictOrg = wk_org_strict.select($"ibox_temp", $"ibox_name", $"orgPar", $"isOrg")
+testStrictOrg.show(false)
+
+val testOrgPar = wk_org.select($"ibox_temp", $"ibox_name", $"orgPar", $"isOrg").filter($"orgPar".isNotNull)
+
+println(wk_org_loose.count)
+println(wk_org_strict.count)
+println(testOrgPar.count)
+
+
+
+%spark
+wk_org.write.mode("overwrite").parquet("hdfs://localhost:9000/data/wk_org_parquet/")

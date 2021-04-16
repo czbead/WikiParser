@@ -1,0 +1,45 @@
+%spark
+import org.apache.spark.sql.SparkSession
+val spark = SparkSession.builder.getOrCreate()
+val wk_text = spark.read.parquet("hdfs://localhost:9000/data/wk_text_parquet/")
+wk_text.printSchema
+wk_text.show
+
+
+
+%spark
+def parseEdgeCase(keyWord: String): (String => List[String]) = { wikitext => 
+	if (null == wikitext) {
+		null
+	} else {
+		val text = wikitext.trim.toLowerCase
+		if (!(text contains keyWord)) {
+			null
+		} else {
+			val lines = text.split("\n").toList
+			val hasInfoLines = lines.filter(_ contains keyWord) 
+			val speInfoLines = hasInfoLines.filter( line => {
+				val lineStr = line.trim.replaceAll(" +", "")
+				!lineStr.startsWith("{{infobox") && !lineStr.startsWith("<!") && !lineStr.startsWith("{|class=\"infobox\"") && !(lineStr contains "{{infobox") && 
+				!(lineStr contains "{|class=\"infobox\"")
+			})
+			if (speInfoLines.isEmpty) {
+				null
+			} else {
+				speInfoLines
+			}
+		}
+	}
+}
+
+val infoboxKeyWord = "infobox"
+val parseEdgeCaseUDF = udf(parseEdgeCase(infoboxKeyWord))
+
+
+
+%spark
+val wk_infoEdge = wk_text.withColumn("ibox_edge", parseEdgeCaseUDF($"rev_text"))
+val checkEdgeInfo = wk_infoEdge.select($"ibox_edge").filter($"ibox_edge".isNotNull)
+
+println(checkEdgeInfo.count)
+checkEdgeInfo.show(200, false)

@@ -1,0 +1,187 @@
+%spark
+import org.apache.spark.sql.SparkSession
+val spark = SparkSession.builder.getOrCreate()
+val wk_rawst = spark.read.parquet("hdfs://localhost:9000/data/wk_rawst_parquet/")
+
+wk_rawst.printSchema
+wk_rawst.show
+
+
+%spark
+import scala.collection.mutable.WrappedArray
+import scala.util.matching.Regex
+
+def parseField(pattern: Regex): (WrappedArray[String] => WrappedArray[String]) = { strs => 
+	if (null == strs) {
+		null
+	} else {
+		var tmp = ""
+		val values = strs.map( str => {
+			val firstLine = str.split("\n|\r", 2)(0).trim
+			tmp = pattern.replaceAllIn(firstLine.toLowerCase, " ")
+			tmp.trim.replaceAll(" +", " ")
+		})
+		values
+	}
+}
+
+import org.json4s._
+import org.json4s.jackson.Serialization
+import org.json4s.jackson.Serialization.write
+import org.json4s.JsonDSL._
+import org.json4s.jackson.JsonMethods._
+
+def parseTable(): (WrappedArray[String] => String) = { tabLst => 
+	if (null == tabLst) {
+		null 
+	} else {
+		val colPa = "\\{\\{.*?\\}\\}|!|<.*?>|''|\\[|\\]|\\}|(<ref>.*?</ref>)".r
+		val colPa2 = "\\[\\[.*?\\]\\]".r
+		val namePa = "\\{\\{(.*)\\}\\}|\\+|\\||(<ref>.*?</ref>)".r
+
+		var wikiTables = tabLst.toList.map( r => {
+			var colName = ""
+			var tableName = ""
+
+			val rawTableName = r.split("\n").filter(_.trim.startsWith("|+"))
+			if (!rawTableName.isEmpty) {
+				val rawName = rawTableName(0)
+				tableName = namePa.replaceAllIn(rawName.toLowerCase, " ").replaceAll(" +", " ").trim
+			}
+
+			val rawColLst = r.split("\n").filter(_.trim.startsWith("!"))
+			var realColLst = rawColLst 
+			if (!rawColLst.isEmpty) {
+				val firstEle = rawColLst(0)
+				if (firstEle contains "!!") {
+					realColLst = firstEle.split("!!")
+				}
+			}
+
+			val tableCols = realColLst.toList.map(a => {
+				if (a contains "[[") {
+					colPa2.findFirstIn(a).getOrElse("").trim.stripPrefix("[[").stripSuffix("]]").trim.replaceAll(" +", " ").trim
+				} else {
+					colName = colPa.replaceAllIn(a.toLowerCase, " ")
+					colName.trim.replaceAll(" +", " ").split("\\|").filter(x => !(x contains "=")).mkString(" ").trim
+				}
+			})
+			Map("tableName" -> tableName, "tableCols" -> tableCols)
+		})
+		implicit val formats = DefaultFormats
+		write(wikiTables)
+	}
+}
+
+import scala.collection.mutable.Map
+
+def parseIBox(): (WrappedArray[String] => List[String]) = { infos =>
+	if (null == infos) {
+		null
+	} else {
+	    implicit val formats = DefaultFormats
+		val jsonLst = infos.toList.map( info => {
+			var boxName = ""
+			val lines = info.trim.stripPrefix("{{").stripSuffix("}}").split("\n").toList
+			val firstLine = lines(0)
+			val attrLines = lines.filter(_ contains "=")
+
+			val namePa = "<.*?>|infobox|\\|(.*)|\\{|\\}|(<ref>.*?</ref>)".r
+			val tmpName = namePa.replaceAllIn(firstLine.toLowerCase, " ")
+			boxName = tmpName.trim.replaceAll(" +", " ")
+
+			val attrValPa = "<.*?>|\\{\\{.*?\\}\\}".r
+			val attrsMap = Map[String, String]()
+			val attrs = attrLines.map( r => {
+				val lineEle = r.trim.stripPrefix("|").trim
+				val lineArr = lineEle.split("=", 2)
+				val leng = lineArr.length
+				var attrName = ""
+				var attrVal = ""
+				if (leng >= 1) {
+					attrName = lineArr(0).trim.stripPrefix("|").trim 
+				} 
+				if (leng >= 2) {
+					val attrValRaw = lineArr(1).trim.replaceAll(" +", " ")
+					val tempVal = attrValPa.replaceAllIn(attrValRaw.toLowerCase, " ")
+					attrVal = tempVal.trim.replaceAll(" +", " ")
+				}
+				(attrName, attrVal)
+			})
+			for (i <- attrs) {
+				attrsMap += (i._1 -> i._2)
+			}
+			attrsMap += ("template" -> boxName)
+			write(attrsMap.toMap)
+		})
+		
+		if (jsonLst.isEmpty) null else jsonLst
+	}
+}
+
+import org.json4s._
+import org.json4s.jackson.Serialization.{read, write}
+import org.json4s.jackson.JsonMethods._
+import scala.collection.immutable.{Map => ImmutableMap}
+
+def getField(field: String): (WrappedArray[String] => List[String]) = { jsonStrs =>
+	if (null == jsonStrs) {
+		null
+	} else {
+		implicit val formats = DefaultFormats
+		val nameLst = jsonStrs.toList.map( jsonStr => {
+		    if (null == jsonStr || "" == jsonStr.trim) {
+		        null
+		    } else {
+		        val iBoxMap = parse(jsonStr).extract[ImmutableMap[String, String]]
+		        if (iBoxMap.contains(field)) {
+		            iBoxMap(field).replaceAll("'", "")
+		        } else {
+		            null
+		        }
+		    }
+		})
+		
+		if (nameLst.isEmpty) null else nameLst
+	}
+}
+
+
+val iBoxTempPa = "<.*?>|infobox|\\|(.*)|\\{|\\}|(<ref>.*?</ref>)".r
+val parseIBoxTempUDF = udf(parseField(iBoxTempPa))
+
+val cateValPa = "category|:|\\||\\[|\\]|(<ref>.*?</ref>)".r
+val parseCateValUDF = udf(parseField(cateValPa))
+
+val parseTableUDF = udf(parseTable)
+val parseIBoxUDF = udf(parseIBox)
+
+val iBoxNameField = "name"
+val getIBoxNameUDF = udf(getField(iBoxNameField))
+
+
+
+%spark
+val wk_ibox_temp = wk_rawst.withColumn("ibox_temp", parseIBoxTempUDF($"ibox"))
+val wk_cate = wk_ibox_temp.withColumn("cate_val", parseCateValUDF($"cate"))
+val wk_table_json = wk_cate.withColumn("table_json", parseTableUDF($"wtable"))
+val wk_ibox_json = wk_table_json.withColumn("ibox_json", parseIBoxUDF($"ibox"))
+val wk_ibox_name = wk_ibox_json.withColumn("ibox_name", getIBoxNameUDF($"ibox_json"))
+
+val wk_struct = wk_ibox_name
+wk_struct.printSchema
+wk_struct.show
+
+
+
+%spark
+// wk_struct.select($"ibox_temp").filter($"ibox_temp".isNotNull).show(false)
+// wk_struct.select($"cate_val").filter($"cate_val".isNotNull).show(false)
+// wk_struct.select($"table_json").filter($"table_json".isNotNull).show(false)
+// wk_ibox_json.select($"ibox_json").show(false)
+// wk_struct.select($"ibox_name").filter($"ibox_name".isNotNull).show(100, false)
+
+
+
+%spark
+wk_struct.write.mode("overwrite").parquet("hdfs://localhost:9000/data/wk_struct_parquet/")

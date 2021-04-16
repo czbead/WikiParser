@@ -1,0 +1,29 @@
+%spark
+import org.apache.spark.sql.SparkSession
+val spark = SparkSession.builder.getOrCreate()
+
+val wk_article = spark.read.parquet("hdfs://localhost:9000/data/wk_article_parquet/")
+wk_article.printSchema
+wk_article.show
+
+val wk_struct = spark.read.parquet("hdfs://localhost:9000/data/wk_struct_parquet/")
+wk_struct.printSchema
+wk_struct.show
+
+val wk_tree = spark.read.parquet("hdfs://localhost:9000/data/wk_tree_parquet/")
+wk_tree.printSchema
+wk_tree.show
+
+
+
+%spark
+val wk_merged = wk_article.join(wk_struct, "id").join(wk_tree, "id")
+wk_merged.printSchema
+
+val wk_hasbox = wk_merged.filter($"ibox".isNotNull)
+
+
+
+%spark
+wk_hasbox.write.mode("overwrite").parquet("hdfs://localhost:9000/data/wk_hasbox_parquet/")
+wk_merged.write.mode("overwrite").parquet("hdfs://localhost:9000/data/wk_merged_parquet/")

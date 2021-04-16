@@ -1,0 +1,36 @@
+%spark
+import org.apache.spark.sql.SparkSession
+import com.databricks.spark.xml._
+val spark = SparkSession.builder.getOrCreate()
+val wk_raw = spark.read.format("com.databricks.spark.xml").option("rowTag", "page").load("hdfs://localhost:9000/data/wk.xml.bz2")
+wk_raw.printSchema
+wk_raw.showi
+
+
+%spark
+wk_raw.write.mode("overwrite").parquet("hdfs://localhost:9000/data/wk_raw_parquet/")
+
+
+%spark
+val wk_df1 = wk_raw.select($"id", $"ns", $"redirect._title".alias("redirect"), $"revision", $"title")
+val wk_df2 = wk_df1.select($"id", $"title", $"ns", $"redirect", $"revision.id".alias("rev_id"), $"revision.parentid".alias("rev_parentid"), $"revision.text".alias("rev_text"), $"revision.contributor".alias("rev_contributor"), $"revision.comment".alias("rev_comment"), $"revision.timestamp".alias("rev_timestamp"), $"revision.format".alias("rev_foramt"), $"revision.model".alias("rev_model"), $"revision.minor".alias("rev_minor"), $"revision.sha1".alias("rev_sha1"))
+val wk_df3 = wk_df2.select($"id", $"title", $"ns", $"redirect", $"rev_id", $"rev_parentid", $"rev_text", $"rev_contributor", $"rev_comment._VALUE".alias("rev_comment"), $"rev_comment._deleted".alias("rev_comment_status"), $"rev_timestamp", $"rev_foramt", $"rev_model", $"rev_minor", $"rev_sha1")
+val wk_df4 = wk_df3.select($"id", $"title", $"ns", $"redirect", $"rev_id", $"rev_parentid".alias("rev_pid"), $"rev_text", $"rev_contributor.id".alias("rev_ctr_id"), $"rev_contributor.ip".alias("rev_ctr_ip"), $"rev_contributor.username".alias("rev_ctr_user"), $"rev_contributor._deleted".alias("rev_ctr_st"), $"rev_comment".alias("rev_cmt"), $"rev_comment_status".alias("rev_cmt_st"), $"rev_timestamp".alias("rev_ts"), $"rev_foramt", $"rev_model", $"rev_sha1")
+val wk_df5 = wk_df4.select($"id", $"title", $"ns", $"redirect", $"rev_id", $"rev_pid", $"rev_text._VALUE".alias("rev_text"), $"rev_ctr_id", $"rev_ctr_ip", $"rev_ctr_user", $"rev_ctr_st", $"rev_cmt", $"rev_cmt_st", $"rev_ts", $"rev_foramt", $"rev_model", $"rev_sha1")
+
+
+%spark
+val wk_xml = wk_df5
+val wk_redirect = wk_xml.filter($"redirect".isNotNull)
+val wk_article = wk_xml.filter($"redirect".isNull)
+val wk_text = wk_article.select($"id", $"rev_text")
+wk_xml.printSchema
+wk_xml.show
+
+
+%spark
+wk_text.write.mode("overwrite").parquet("hdfs://localhost:9000/data/wk_text_parquet/")
+wk_article.write.mode("overwrite").parquet("hdfs://localhost:9000/data/wk_article_parquet/")
+wk_redirect.write.mode("overwrite").parquet("hdfs://localhost:9000/data/wk_redirect_parquet/")
+
+
