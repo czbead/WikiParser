@@ -1,0 +1,266 @@
+﻿{
+  "paragraphs": [
+    {
+      "text": "%spark\nimport org.apache.spark.sql.SparkSession\nval spark = SparkSession.builder.getOrCreate()\nval wk_hasbox = spark.read.parquet(\"hdfs://localhost:9000/data/wk_hasbox_parquet/\")\nwk_hasbox.printSchema\n\nval wk_merged = spark.read.parquet(\"hdfs://localhost:9000/data/wk_merged_parquet/\")\nval wk_redirect = spark.read.parquet(\"hdfs://localhost:9000/data/wk_redirect_parquet/\")",
+      "user": "anonymous",
+      "dateUpdated": "2021-04-16T11:48:56-0700",
+      "progress": 100,
+      "config": {
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12,
+        "editorMode": "ace/mode/scala",
+        "fontSize": 9,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "root\n |-- id: long (nullable = true)\n |-- title: string (nullable = true)\n |-- ns: long (nullable = true)\n |-- redirect: string (nullable = true)\n |-- rev_id: long (nullable = true)\n |-- rev_pid: long (nullable = true)\n |-- rev_text: string (nullable = true)\n |-- rev_ctr_id: long (nullable = true)\n |-- rev_ctr_ip: string (nullable = true)\n |-- rev_ctr_user: string (nullable = true)\n |-- rev_ctr_st: string (nullable = true)\n |-- rev_cmt: string (nullable = true)\n |-- rev_cmt_st: string (nullable = true)\n |-- rev_ts: timestamp (nullable = true)\n |-- rev_foramt: string (nullable = true)\n |-- rev_model: string (nullable = true)\n |-- rev_sha1: string (nullable = true)\n |-- unclose: boolean (nullable = true)\n |-- dbrace: array (nullable = true)\n |    |-- element: string (containsNull = true)\n |-- dbracket: array (nullable = true)\n |    |-- element: string (containsNull = true)\n |-- bpipe: array (nullable = true)\n |    |-- element: string (containsNull = true)\n |-- cmt: array (nullable = true)\n |    |-- element: string (containsNull = true)\n |-- ibox: array (nullable = true)\n |    |-- element: string (containsNull = true)\n |-- cite: array (nullable = true)\n |    |-- element: string (containsNull = true)\n |-- dbrace1: array (nullable = true)\n |    |-- element: string (containsNull = true)\n |-- dbrace0: array (nullable = true)\n |    |-- element: string (containsNull = true)\n |-- cate: array (nullable = true)\n |    |-- element: string (containsNull = true)\n |-- file: array (nullable = true)\n |    |-- element: string (containsNull = true)\n |-- dbraket1: array (nullable = true)\n |    |-- element: string (containsNull = true)\n |-- dbracket0: array (nullable = true)\n |    |-- element: string (containsNull = true)\n |-- wtable: array (nullable = true)\n |    |-- element: string (containsNull = true)\n |-- tbox: array (nullable = true)\n |    |-- element: string (containsNull = true)\n |-- bpipe1: array (nullable = true)\n |    |-- element: string (containsNull = true)\n |-- bpipe0: array (nullable = true)\n |    |-- element: string (containsNull = true)\n |-- ibox_temp: array (nullable = true)\n |    |-- element: string (containsNull = true)\n |-- cate_val: array (nullable = true)\n |    |-- element: string (containsNull = true)\n |-- table_json: string (nullable = true)\n |-- ibox_json: array (nullable = true)\n |    |-- element: string (containsNull = true)\n |-- ibox_name: array (nullable = true)\n |    |-- element: string (containsNull = true)\n |-- hdstr: array (nullable = true)\n |    |-- element: string (containsNull = true)\n |-- hdtu: array (nullable = true)\n |    |-- element: struct (containsNull = true)\n |    |    |-- _1: string (nullable = true)\n |    |    |-- _2: integer (nullable = true)\n |-- level: array (nullable = true)\n |    |-- element: integer (containsNull = true)\n |-- badtree: boolean (nullable = true)\n |-- tree_map: map (nullable = true)\n |    |-- key: string\n |    |-- value: array (valueContainsNull = true)\n |    |    |-- element: string (containsNull = true)\n |-- tree_json: string (nullable = true)\n |-- tree_amt: integer (nullable = true)\n\nimport org.apache.spark.sql.SparkSession\n\u001b[1m\u001b[34mspark\u001b[0m: \u001b[1m\u001b[32morg.apache.spark.sql.SparkSession\u001b[0m = org.apache.spark.sql.SparkSession@8f148ea\n\u001b[1m\u001b[34mwk_hasbox\u001b[0m: \u001b[1m\u001b[32morg.apache.spark.sql.DataFrame\u001b[0m = [id: bigint, title: string ... 44 more fields]\n\u001b[1m\u001b[34mwk_merged\u001b[0m: \u001b[1m\u001b[32morg.apache.spark.sql.DataFrame\u001b[0m = [id: bigint, title: string ... 44 more fields]\n\u001b[1m\u001b[34mwk_redirect\u001b[0m: \u001b[1m\u001b[32morg.apache.spark.sql.DataFrame\u001b[0m = [id: bigint, title: string ... 15 more fields]\n"
+          }
+        ]
+      },
+      "apps": [],
+      "runtimeInfos": {
+        "jobUrl": {
+          "propertyName": "jobUrl",
+          "label": "SPARK JOB",
+          "tooltip": "View in Spark web UI",
+          "group": "spark",
+          "values": [
+            {
+              "jobUrl": "http://eco-ubt.hitronhub.home:4040/jobs/job?id=0",
+              "$$hashKey": "object:11621"
+            },
+            {
+              "jobUrl": "http://eco-ubt.hitronhub.home:4040/jobs/job?id=1",
+              "$$hashKey": "object:11622"
+            },
+            {
+              "jobUrl": "http://eco-ubt.hitronhub.home:4040/jobs/job?id=2",
+              "$$hashKey": "object:11623"
+            }
+          ],
+          "interpreterSettingId": "spark"
+        }
+      },
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1618361184727_1378440010",
+      "id": "paragraph_1618361184727_1378440010",
+      "dateCreated": "2021-04-13T17:46:24-0700",
+      "dateStarted": "2021-04-16T11:48:56-0700",
+      "dateFinished": "2021-04-16T11:49:10-0700",
+      "status": "FINISHED",
+      "focus": true,
+      "$$hashKey": "object:11454"
+    },
+    {
+      "text": "%spark\nval wk_hasbox1 = wk_hasbox.withColumn(\"ibox_temp_str\", concat_ws(\"_\", $\"ibox_temp\"))\nval wk_merged1 = wk_merged.withColumn(\"cate_val_str\", concat_ws(\"_\", $\"cate_val\"))",
+      "user": "anonymous",
+      "dateUpdated": "2021-04-16T11:49:19-0700",
+      "progress": 0,
+      "config": {
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12,
+        "editorMode": "ace/mode/scala",
+        "fontSize": 9,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "\u001b[1m\u001b[34mwk_hasbox1\u001b[0m: \u001b[1m\u001b[32morg.apache.spark.sql.DataFrame\u001b[0m = [id: bigint, title: string ... 45 more fields]\n\u001b[1m\u001b[34mwk_merged1\u001b[0m: \u001b[1m\u001b[32morg.apache.spark.sql.DataFrame\u001b[0m = [id: bigint, title: string ... 45 more fields]\n"
+          }
+        ]
+      },
+      "apps": [],
+      "runtimeInfos": {},
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1618598418305_1059932391",
+      "id": "paragraph_1618598418305_1059932391",
+      "dateCreated": "2021-04-16T11:40:18-0700",
+      "dateStarted": "2021-04-16T11:49:19-0700",
+      "dateFinished": "2021-04-16T11:49:19-0700",
+      "status": "FINISHED",
+      "$$hashKey": "object:11455"
+    },
+    {
+      "text": "%spark\nimport org.apache.spark.sql.DataFrame\nimport org.apache.spark.sql.Row\nimport org.apache.spark.sql.functions.{lower, upper}\n\n\ndef getTopicDataset(topic: String, df: DataFrame, colName: String): DataFrame = { \n    val rstDF = df.filter(array_contains(col(colName), topic.trim.toLowerCase))\n    // rstDF.printSchema\n    println(\"Number of %s topic article (strict search) found:  %d\".format(topic, rstDF.count))\n    return rstDF\n}\n\ndef getTopicDatasetWide(topic: String, df: DataFrame, colName: String): DataFrame = {\n    val rstDF = df.filter(col(colName).contains(topic.trim.toLowerCase))\n    println(\"Number of %s topic article (wide search) found:  %d\".format(topic, rstDF.count))\n    return rstDF\n}\n\ndef searchRealArticle(title: String, colName: String): DataFrame = {\n    val input = title.toLowerCase\n    val aDF = wk_merged.filter(lower($\"title\") === input)\n    if (aDF.rdd.isEmpty) {\n        println(\"Article with %s title doesn't exist in the dump. \".format(title))\n        return null\n    } \n    if (null == colName || \"\" == colName.trim) {\n        aDF.show(false)\n    } else if (aDF.columns.contains(colName)) {\n        println(aDF.select(col(colName)).first.getString(0))\n    } else {\n        println(\"Article found but required column %s not exist in the dataset. \".format(colName))\n    }\n    return aDF\n}\n\ndef getArticle(title: String, colName: String): DataFrame = {\n    val input = title.toLowerCase\n    val rDF = wk_redirect.filter(lower($\"title\") === input)\n    if (rDF.rdd.isEmpty) {\n        println(\"The article %s is not a redirect article. Please wait for the search result\".format(title))\n        \n        return searchRealArticle(title, colName)\n    } else {\n        println(\"The article %s is a redirect article. Please wait for the real article\".format(title))\n        val realTitle = rDF.select($\"redirect\").first.getString(0)\n        return searchRealArticle(realTitle, colName)\n    }\n}",
+      "user": "anonymous",
+      "dateUpdated": "2021-04-16T11:49:23-0700",
+      "progress": 0,
+      "config": {
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12,
+        "editorMode": "ace/mode/scala",
+        "fontSize": 9,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "import org.apache.spark.sql.DataFrame\nimport org.apache.spark.sql.Row\nimport org.apache.spark.sql.functions.{lower, upper}\n\u001b[1m\u001b[34mgetTopicDataset\u001b[0m: \u001b[1m\u001b[32m(topic: String, df: org.apache.spark.sql.DataFrame, colName: String)org.apache.spark.sql.DataFrame\u001b[0m\n\u001b[1m\u001b[34mgetTopicDatasetWide\u001b[0m: \u001b[1m\u001b[32m(topic: String, df: org.apache.spark.sql.DataFrame, colName: String)org.apache.spark.sql.DataFrame\u001b[0m\n\u001b[1m\u001b[34msearchRealArticle\u001b[0m: \u001b[1m\u001b[32m(title: String, colName: String)org.apache.spark.sql.DataFrame\u001b[0m\n\u001b[1m\u001b[34mgetArticle\u001b[0m: \u001b[1m\u001b[32m(title: String, colName: String)org.apache.spark.sql.DataFrame\u001b[0m\n"
+          }
+        ]
+      },
+      "apps": [],
+      "runtimeInfos": {},
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1618360499783_104171293",
+      "id": "paragraph_1618360499783_104171293",
+      "dateCreated": "2021-04-13T17:34:59-0700",
+      "dateStarted": "2021-04-16T11:49:23-0700",
+      "dateFinished": "2021-04-16T11:49:23-0700",
+      "status": "FINISHED",
+      "$$hashKey": "object:11456"
+    },
+    {
+      "text": "%spark\n// val getBooks = getTopicDataset(\"book\", wk_hasbox, \"ibox_temp\")\nval getHistory1 = getTopicDataset(\"history\", wk_merged1, \"cate_val\")\nval getHistory2 = getTopicDatasetWide(\"history\", wk_merged1, \"cate_val_str\")\nval getOrg1 = getTopicDataset(\"organization\", wk_hasbox1, \"ibox_temp\")\nval getOrg2 = getTopicDatasetWide(\"organization\", wk_hasbox1, \"ibox_temp_str\")\n\n// val getRealArticle = getArticle(\"Anarchism\", \"tree_json\")  \n// val getRedirectArticle = getArticle(\"AssistiveTechnology\", \"title\") \n// val getArticleCase = getArticle(\"Serverless computing\", \"tree_json\")",
+      "user": "anonymous",
+      "dateUpdated": "2021-04-16T11:53:13-0700",
+      "progress": 87,
+      "config": {
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12,
+        "editorMode": "ace/mode/scala",
+        "fontSize": 9,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "Number of history topic article (strict search) found:  28\nNumber of history topic article (wide search) found:  174958\nNumber of organization topic article (strict search) found:  24425\nNumber of organization topic article (wide search) found:  26624\n\u001b[1m\u001b[34mgetHistory1\u001b[0m: \u001b[1m\u001b[32morg.apache.spark.sql.DataFrame\u001b[0m = [id: bigint, title: string ... 45 more fields]\n\u001b[1m\u001b[34mgetHistory2\u001b[0m: \u001b[1m\u001b[32morg.apache.spark.sql.DataFrame\u001b[0m = [id: bigint, title: string ... 45 more fields]\n\u001b[1m\u001b[34mgetOrg1\u001b[0m: \u001b[1m\u001b[32morg.apache.spark.sql.DataFrame\u001b[0m = [id: bigint, title: string ... 45 more fields]\n\u001b[1m\u001b[34mgetOrg2\u001b[0m: \u001b[1m\u001b[32morg.apache.spark.sql.DataFrame\u001b[0m = [id: bigint, title: string ... 45 more fields]\n"
+          }
+        ]
+      },
+      "apps": [],
+      "runtimeInfos": {
+        "jobUrl": {
+          "propertyName": "jobUrl",
+          "label": "SPARK JOB",
+          "tooltip": "View in Spark web UI",
+          "group": "spark",
+          "values": [
+            {
+              "jobUrl": "http://eco-ubt.hitronhub.home:4040/jobs/job?id=11",
+              "$$hashKey": "object:11793"
+            },
+            {
+              "jobUrl": "http://eco-ubt.hitronhub.home:4040/jobs/job?id=12",
+              "$$hashKey": "object:11794"
+            },
+            {
+              "jobUrl": "http://eco-ubt.hitronhub.home:4040/jobs/job?id=13",
+              "$$hashKey": "object:11795"
+            },
+            {
+              "jobUrl": "http://eco-ubt.hitronhub.home:4040/jobs/job?id=14",
+              "$$hashKey": "object:11796"
+            }
+          ],
+          "interpreterSettingId": "spark"
+        }
+      },
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1618360608237_2053137566",
+      "id": "paragraph_1618360608237_2053137566",
+      "dateCreated": "2021-04-13T17:36:48-0700",
+      "dateStarted": "2021-04-16T11:53:13-0700",
+      "dateFinished": "2021-04-16T11:53:23-0700",
+      "status": "FINISHED",
+      "$$hashKey": "object:11457"
+    },
+    {
+      "text": "%spark\n",
+      "user": "anonymous",
+      "dateUpdated": "2021-04-13T18:36:37-0700",
+      "progress": 0,
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "runtimeInfos": {},
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1618364197225_1917651180",
+      "id": "paragraph_1618364197225_1917651180",
+      "dateCreated": "2021-04-13T18:36:37-0700",
+      "status": "READY",
+      "$$hashKey": "object:11458"
+    }
+  ],
+  "name": "Data and Topic Resolver",
+  "id": "2G5QRRK8N",
+  "defaultInterpreterGroup": "spark",
+  "version": "0.9.0",
+  "noteParams": {},
+  "noteForms": {},
+  "angularObjects": {},
+  "config": {
+    "isZeppelinNotebookCronEnable": false,
+    "looknfeel": "default",
+    "personalizedMode": "false"
+  },
+  "info": {},
+  "path": "/Data and Topic Resolver"
+}

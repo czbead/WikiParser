@@ -1,0 +1,331 @@
+﻿{
+  "paragraphs": [
+    {
+      "text": "%spark\nimport org.apache.spark.sql.SparkSession\nval spark = SparkSession.builder.getOrCreate()\nval wk_hasbox = spark.read.parquet(\"hdfs://localhost:9000/data/wk_hasbox_parquet/\")\nwk_hasbox.printSchema\nwk_hasbox.show",
+      "user": "anonymous",
+      "dateUpdated": "2021-04-13T15:12:49-0700",
+      "progress": 0,
+      "config": {
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12,
+        "editorMode": "ace/mode/scala",
+        "fontSize": 9,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "root\n |-- id: long (nullable = true)\n |-- title: string (nullable = true)\n |-- ns: long (nullable = true)\n |-- redirect: string (nullable = true)\n |-- rev_id: long (nullable = true)\n |-- rev_pid: long (nullable = true)\n |-- rev_text: string (nullable = true)\n |-- rev_ctr_id: long (nullable = true)\n |-- rev_ctr_ip: string (nullable = true)\n |-- rev_ctr_user: string (nullable = true)\n |-- rev_ctr_st: string (nullable = true)\n |-- rev_cmt: string (nullable = true)\n |-- rev_cmt_st: string (nullable = true)\n |-- rev_ts: timestamp (nullable = true)\n |-- rev_foramt: string (nullable = true)\n |-- rev_model: string (nullable = true)\n |-- rev_sha1: string (nullable = true)\n |-- unclose: boolean (nullable = true)\n |-- dbrace: array (nullable = true)\n |    |-- element: string (containsNull = true)\n |-- dbracket: array (nullable = true)\n |    |-- element: string (containsNull = true)\n |-- bpipe: array (nullable = true)\n |    |-- element: string (containsNull = true)\n |-- cmt: array (nullable = true)\n |    |-- element: string (containsNull = true)\n |-- ibox: array (nullable = true)\n |    |-- element: string (containsNull = true)\n |-- cite: array (nullable = true)\n |    |-- element: string (containsNull = true)\n |-- dbrace1: array (nullable = true)\n |    |-- element: string (containsNull = true)\n |-- dbrace0: array (nullable = true)\n |    |-- element: string (containsNull = true)\n |-- cate: array (nullable = true)\n |    |-- element: string (containsNull = true)\n |-- file: array (nullable = true)\n |    |-- element: string (containsNull = true)\n |-- dbraket1: array (nullable = true)\n |    |-- element: string (containsNull = true)\n |-- dbracket0: array (nullable = true)\n |    |-- element: string (containsNull = true)\n |-- wtable: array (nullable = true)\n |    |-- element: string (containsNull = true)\n |-- tbox: array (nullable = true)\n |    |-- element: string (containsNull = true)\n |-- bpipe1: array (nullable = true)\n |    |-- element: string (containsNull = true)\n |-- bpipe0: array (nullable = true)\n |    |-- element: string (containsNull = true)\n |-- ibox_temp: array (nullable = true)\n |    |-- element: string (containsNull = true)\n |-- cate_val: array (nullable = true)\n |    |-- element: string (containsNull = true)\n |-- table_json: string (nullable = true)\n |-- ibox_json: array (nullable = true)\n |    |-- element: string (containsNull = true)\n |-- ibox_name: array (nullable = true)\n |    |-- element: string (containsNull = true)\n |-- hdstr: array (nullable = true)\n |    |-- element: string (containsNull = true)\n |-- hdtu: array (nullable = true)\n |    |-- element: struct (containsNull = true)\n |    |    |-- _1: string (nullable = true)\n |    |    |-- _2: integer (nullable = true)\n |-- level: array (nullable = true)\n |    |-- element: integer (containsNull = true)\n |-- badtree: boolean (nullable = true)\n |-- tree_map: map (nullable = true)\n |    |-- key: string\n |    |-- value: array (valueContainsNull = true)\n |    |    |-- element: string (containsNull = true)\n |-- tree_json: string (nullable = true)\n |-- tree_amt: integer (nullable = true)\n\n+-----+--------------------+---+--------+----------+----------+--------------------+----------+--------------------+--------------------+----------+--------------------+----------+-------------------+-----------+---------+--------------------+-------+--------------------+--------------------+--------------------+--------------------+--------------------+--------------------+--------------------+--------------------+--------------------+--------------------+--------------------+--------------------+--------------------+--------------------+--------------------+--------------------+--------------------+--------------------+--------------------+--------------------+--------------------+--------------------+--------------------+--------------------+-------+--------------------+--------------------+--------+\n|   id|               title| ns|redirect|    rev_id|   rev_pid|            rev_text|rev_ctr_id|          rev_ctr_ip|        rev_ctr_user|rev_ctr_st|             rev_cmt|rev_cmt_st|             rev_ts| rev_foramt|rev_model|            rev_sha1|unclose|              dbrace|            dbracket|               bpipe|                 cmt|                ibox|                cite|             dbrace1|             dbrace0|                cate|                file|            dbraket1|           dbracket0|              wtable|                tbox|              bpipe1|              bpipe0|           ibox_temp|            cate_val|          table_json|           ibox_json|           ibox_name|               hdstr|                hdtu|               level|badtree|            tree_map|           tree_json|tree_amt|\n+-----+--------------------+---+--------+----------+----------+--------------------+----------+--------------------+--------------------+----------+--------------------+----------+-------------------+-----------+---------+--------------------+-------+--------------------+--------------------+--------------------+--------------------+--------------------+--------------------+--------------------+--------------------+--------------------+--------------------+--------------------+--------------------+--------------------+--------------------+--------------------+--------------------+--------------------+--------------------+--------------------+--------------------+--------------------+--------------------+--------------------+--------------------+-------+--------------------+--------------------+--------+\n| 1677|        Alfonso XIII|  0|    null|1012702452|1012668906|{{short descripti...|  22039575|                null|       Nicolás Macri|      null|Fixed broken link...|      null|2021-03-17 13:54:25|text/x-wiki| wikitext|pm6hrslco170k19m3...|  false|[{{short descript...|[[[King of Spain]...|                null|[<!-- Full orname...|[{{Infobox royalt...|[{{Cite book|firs...|[{{short descript...|[{{efn|In the [[l...|[[[Category:Alfon...|[[[File:Alfonso_X...|[[[King of Spain]...|                null|                null|                null|                null|                null|           [royalty]|[alfonso xiii of ...|                null|[{\"mother\":\"[[mar...|      [alfonso xiii]|[==Reign==, ===Bi...|[{Reign, 2}, {Bir...|[2, 3, 3, 3, 3, 3...|  false|{Arms-1 -> null, ...|{\"Arms-1\":null,\"W...|      21|\n| 1806|Arnold Schwarzene...|  0|    null|1012597684|1012042397|{{short descripti...|  13568690|                null|        Joefromrandb|      null|   [[MOS:JOBTITLES]]|      null|2021-03-17 00:45:02|text/x-wiki| wikitext|r41svd1bw4qi1f2o6...|  false|[{{short descript...|[[[List of govern...|[{| class=\"wikita...|[<!-- {{[[Templat...|[{{Infobox office...|[{{cite web|url=h...|[{{short descript...|[{{columns-list|c...|[[[Category:Arnol...|[[[File:Thal - Ge...|[[[List of govern...|[[[Terminator 2: ...|[{| class=\"wikita...|                null|                null|                null|[officeholder, bo...|[arnold schwarzen...|[{\"tableName\":\"ar...|[{\"children\":\"5, ...|[arnold schwarzen...|[==Early life==, ...|[{Early life, 2},...|[2, 3, 2, 3, 4, 3...|  false|{Personal records...|{\"Personal record...|      52|\n| 1950|American Civil Li...|  0|    null|1013070652|1012025993|{{for|the conserv...|  41273310|                null|            Aapehill|      null|Redirected hyperl...|      null|2021-03-19 14:24:04|text/x-wiki| wikitext|bhb2l0wn4ycsbooxc...|  false|[{{for|the conser...|[[[nonprofit orga...|[{| class=\"wikita...|[<!-- Please resp...|[{{Infobox organi...|[{{cite web|url=h...|[{{for|the conser...|                null|[[[Category:Ameri...|[[[File:2012- ACL...|[[[nonprofit orga...|                null|[{| class=\"wikita...|                null|                null|                null|      [organization]|[american civil l...|[{\"tableName\":\"\",...|[{\"tax_id\":\"13-38...|[american civil l...|[==Overview==, ==...|[{Overview, 2}, {...|[2, 2, 3, 3, 3, 3...|  false|{Civil liberties ...|{\"Civil liberties...|      61|\n| 2529|           Alexandra|  0|    null|1011456204|1011456184|{{About|the human...|  13286072|                null|          ClueBot NG|      null|Reverting possibl...|      null|2021-03-10 16:10:40|text/x-wiki| wikitext|dsexhu4n8m89bler6...|  false|[{{About|the huma...|[[[Alexander]], [...|                null|                null|[{{Infobox given ...|[{{cite book |las...|[{{About|the huma...|                null|[[[Category:Femin...|                null|[[[Alexander]], [...|[[[Degrassi: The ...|                null|                null|                null|                null|        [given name]|[feminine given n...|                null|[{\"name\":\"alexand...|         [alexandra]|[== Variants ==, ...|[{Variants, 2}, {...|[2, 2, 3, 3, 3, 3...|  false|{People with the ...|{\"People with the...|       9|\n| 2927|           Albanians|  0|    null|1012257789|1004665987|{{About|the ethni...|  36006772|                null|           Nathan868|      null|neutral pov and i...|      null|2021-03-15 05:56:37|text/x-wiki| wikitext|197fum4xvnk997kme...|  false|[{{About|the ethn...|[[[Bektashi Order...|[{| class=\"wikita...|                null|[{{Infobox ethnic...|[{{Cite web|url=h...|[{{About|the ethn...|[{{multiple image...|[[[Category:Alban...|[[[File:Christian...|[[[Bektashi Order...|                null|[{| class=\"wikita...|                null|                null|                null|      [ethnic group]|[albanian people,...|[{\"tableName\":\"\",...|[{\"pop9\":\"275\",\"p...|              [null]|[== Ethnonym ==, ...|[{Ethnonym, 2}, {...|[2, 3, 2, 2, 3, 3...|  false|{Diaspora-1 -> [E...|{\"Diaspora-1\":[\"E...|      32|\n| 3764|             Bavaria|  0|    null|1012650216|1012648926|{{short descripti...|      null|2A02:2455:360:8D0...|                null|      null|   /* Agriculture */|      null|2021-03-17 08:31:56|text/x-wiki| wikitext|9bejcp53li2xj4by4...|  false|[{{short descript...|[[[German languag...|[{| class=\"wikita...|[<!--update \"curr...|[{{Infobox settle...|[{{Cite web|title...|[{{short descript...|[{{bar box\n|title...|[[[Category:Bavar...|[[[File:Heunische...|[[[German languag...|                null|[{| class=\"wikita...|[{| class=\"infobo...|                null|[{|\n|-\n|  style=\"...|        [settlement]|[bavaria, states ...|[{\"tableName\":\"\",...|[{\"footnotes\":\"\",...|              [null]|[==History==, ===...|[{History, 2}, {A...|[2, 3, 3, 3, 3, 3...|  false|{Administrative d...|{\"Administrative ...|      49|\n| 4823|         Balkan Wars|  0|    null|1009315071|1009225224|{{For|the 1990s c...|  40216290|                null|ExcellentWheatFarmer|      null|                null|      null|2021-02-27 15:04:36|text/x-wiki| wikitext|tc1ipav9pvozrk94u...|  false|[{{For|the 1990s ...|[[[Balkan Peninsu...|[{| style=\"width:...|                null|[{{Infobox milita...|[{{cite book|auth...|[{{For|the 1990s ...|[{{Collapsible li...|[[[Category:Balka...|[[[File:Map-of-Ot...|[[[Balkan Peninsu...|[[[:s:The New Stu...|[{| style=\"width:...|                null|                null|                null| [military conflict]|[balkan wars, cau...|[{\"tableName\":\"\",...|[{\"combatant1a\":\"...|              [null]|[==Background==, ...|[{Background, 2},...|[2, 3, 3, 3, 3, 3...|  false|{Further reading-...|{\"Further reading...|      29|\n| 5385|             Candela|  0|    null|1008866258| 997423470|{{Short descripti...|   9784415|                null|          Tom.Reding|      null|+{{[[Template:Aut...|      null|2021-02-25 05:34:10|text/x-wiki| wikitext|dcio1bjnfjdbx3rdr...|   true|[{{Short descript...|[[[SI base unit|b...|[{|\\mathbf{\\hat{a...|                null|[{{Infobox Unit\n|...|[{{cite book |las...|[{{Short descript...|                null|                null|[[[File:Linear vi...|[[[SI base unit|b...|                null|                null|                null|[{|\\mathbf{\\hat{a...|                null|              [unit]|                null|                null|[{\"name\":\"candela...|           [candela]|[==Definition==, ...|[{Definition, 2},...|[2, 2, 3, 2, 2, 3...|  false|{SI photometric l...|{\"SI photometric ...|       8|\n| 5556|Economy of Costa ...|  0|    null|1006405870|1002593373|{{Use American En...|   3845793|                null|            Jpczcaya|      null|                null|      null|2021-02-12 10:42:58|text/x-wiki| wikitext|8b15w4jb06i4qzvxi...|  false|[{{Use American E...|[[[economic stabi...|[{| class=\"wikita...|                null|[{{Infobox econom...|[{{cite web|url=h...|[{{Use American E...|                null|[[[Category:Econo...|[[[File:Tree map ...|[[[economic stabi...|[[[Image:Cataract...|[{| class=\"wikita...|                null|                null|                null|           [economy]|[economy of costa...|[{\"tableName\":\"\",...|[{\"sectors\":\"{{pl...|              [null]|[==Public debt an...|[{Public debt and...|[2, 3, 2, 2, 2, 2...|  false|{Statistics-1 -> ...|{\"Statistics-1\":n...|      12|\n| 6721|Cross-country skiing|  0|    null|1010599054|1009725548|{{short descripti...|   4384863|                null|             Jariola|      null|/* Skate skiing *...|      null|2021-03-06 01:04:16|text/x-wiki| wikitext|osavimg183c2mgbg7...|  false|[{{short descript...|[[[skiing]], [[Te...|                null|[<!---We don't se...|[{{Infobox sport\n...|[{{Cite book|url=...|[{{short descript...|                null|[[[Category:Cross...|[[[File:SapmianSk...|[[[skiing]], [[Te...|[[[wikt:camber|ca...|                null|                null|                null|                null|             [sport]|[cross-country sk...|                null|[{\"registered\":\"\"...|[cross-country sk...|[==History==, ===...|[{History, 2}, {T...|[2, 3, 3, 3, 2, 3...|  false|{Other sanctioned...|{\"Other sanctione...|      24|\n| 8075|              Datsun|  0|    null|1009289509|1007794227|{{short descripti...|   5238361|                null|        SuperHamster|      null|/* External links...|      null|2021-02-27 11:52:56|text/x-wiki| wikitext|2keuur1uglewvor8l...|  false|[{{short descript...|[[[Nissan]], [[em...|                null|                null|[{{Infobox compan...|[{{cite LPD|3}}, ...|[{{short descript...|                null|[[[Category:Datsu...|[[[File:Datsun lo...|[[[Nissan]], [[em...|                null|                null|                null|                null|                null|           [company]|[datsun vehicles,...|                null|[{\"parent\":\"[[nis...|            [datsun]|[==History==, ===...|[{History, 2}, {O...|[2, 3, 3, 3, 3, 3...|  false|{Rebranding-2 -> ...|{\"Rebranding-2\":n...|      11|\n| 8484|Deus Ex (video game)|  0|    null|1012874755|1011192373|{{distinguish|Deu...|  17051781|                null|          Neverrainy|      null|                null|      null|2021-03-18 13:21:48|text/x-wiki| wikitext|psutia9kweoj8r87b...|  false|[{{distinguish|De...|[[[Action role-pl...|[{| class=\"wikita...|                null|[{{Infobox video ...|[{{cite web |url=...|[{{distinguish|De...|[{{multiple image...|[[[Category:2000 ...|[[[File:How to pa...|[[[Action role-pl...|[[[Deus Ex: Invis...|[{| class=\"wikita...|                null|                null|                null|        [video game]|[2000 video games...|[{\"tableName\":\"li...|[{\"series\":\"''[[d...|              [null]|[== Gameplay ==, ...|[{Gameplay, 2}, {...|[2, 3, 3, 3, 3, 2...|  false|{Adaptation-2 -> ...|{\"Adaptation-2\":n...|      25|\n| 9945|          EasyWriter|  0|    null| 996642174| 993453022|{{Infobox softwar...|  20483999|                null|             Monkbot|      null|[[User:Monkbot/ta...|      null|2020-12-27 12:55:43|text/x-wiki| wikitext|40iy3zj3uwa3brn6z...|  false|[{{Infobox softwa...|[[[word processor...|                null|                null|[{{Infobox softwa...|[{{cite news\n|wor...|[{{r|freibergeriu...|                null|[[[Category:Apple...|                null|[[[word processor...|                null|                null|                null|                null|                null|          [software]|[apple ii word pr...|                null|[{\"author\":\"[[joh...|        [easywriter]|[==History==, ==R...|[{History, 2}, {R...|        [2, 2, 2, 2]|  false|{History-1 -> nul...|{\"History-1\":null...|       4|\n|10422|      Emperor Kōtoku|  0|    null|1005180623| 995817682|{{Use mdy dates|d...|   8761060|                null|      唐吉訶德的侍從|      null|                null|      null|2021-02-06 02:46:51|text/x-wiki| wikitext|nq6arjx3b3vi9nk62...|  false|[{{Use mdy dates|...|[[[emperor]], [[J...|                null|                null|[{{Infobox Monarc...|[{{cite web|url=h...|[{{Use mdy dates|...|[{{ahnentafel\n|co...|[[[Category:Japan...|[[[File:Osakano s...|[[[emperor]], [[J...|                null|                null|                null|                null|                null|           [monarch]|[japanese emperor...|                null|[{\"mother\":\"princ...|            [kōtoku]|[==Traditional na...|[{Traditional nar...|[2, 3, 2, 2, 2, 2...|  false|{''Kugyō''-2 -> n...|{\"''Kugyō''-2\":nu...|       8|\n|10871|             FM-2030|  0|    null|1010836743|1006950436|{{Short descripti...|  21006650|                null|            Gronk Oz|      null|/* Personal life ...|      null|2021-03-07 08:20:15|text/x-wiki| wikitext|jjcy8vd9wnxigz2rk...|  false|[{{Short descript...|[[[Iranian-Americ...|                null|                null|[{{Infobox writer...|[{{cite news|url=...|[{{Short descript...|                null|[[[Category:1930 ...|                null|[[[Iranian-Americ...|                null|                null|                null|                null|                null|            [writer]|[1930 births, 200...|                null|[{\"name\":\"fm-2030...|           [fm-2030]|[==Early life and...|[{Early life and ...|[2, 2, 2, 2, 2, 2...|  false|{Cultural referen...|{\"Cultural refere...|       9|\n|11625|   Fyodor Dostoevsky|  0|    null|1012353184|1011889076|{{short descripti...|  31755270|                null|          PoetVeches|      null|/* Childhood (182...|      null|2021-03-15 15:46:21|text/x-wiki| wikitext|s51pvrjihph8po8vy...|  false|[{{short descript...|[[[Random House W...|                null|[<!--Both of his ...|[{{Infobox writer...|[{{cite book|titl...|[{{short descript...|[{{plainlist|\n* S...|[[[Category:Fyodo...|[[[File:Image dos...|[[[Random House W...|[[[The Double: A ...|                null|                null|                null|                null|            [writer]|[fyodor dostoyevs...|                null|[{\"name\":\"fyodor ...| [fyodor dostoevsky]|[== Ancestry ==, ...|[{Ancestry, 2}, {...|[2, 2, 2, 2, 3, 3...|  false|{Further reading-...|{\"Further reading...|      43|\n|11745| Farmer Giles of Ham|  0|    null| 992974752| 988303485|{{More citations ...|  40704839|                null|Wikignome Winterg...|      null|Not capitalized, ...|      null|2020-12-07 19:16:31|text/x-wiki| wikitext|iwwo7j0ildukwv5hs...|  false|[{{More citations...|[[[medieval]], [[...|                null|                null|[{{Infobox book \n...|[{{cite book |tit...|[{{More citations...|                null|[[[Category:Ficti...|                null|[[[medieval]], [[...|                null|                null|                null|                null|                null|              [book]|[fictional farmer...|                null|[{\"illustrator\":\"...|[farmer giles of ...|[==Plot summary==...|[{Plot summary, 2...|[2, 2, 2, 2, 2, 2...|  false|{Editions-1 -> [[...|{\"Editions-1\":[\"[...|       9|\n|13098|             Genosha|  0|    null|1007416863| 993702337|{{short descripti...|  36510957|                null|              Goszei|      null|[[WP:GENFIXES|Gen...|      null|2021-02-17 17:14:26|text/x-wiki| wikitext|ie9va56qvzjid96aq...|  false|[{{short descript...|[[[fictional coun...|                null|                null|[{{Infobox fictio...|[{{Cite book|url=...|[{{short descript...|                null|[[[Category:Genos...|                null|[[[fictional coun...|[[[Uncanny X-Men#...|                null|                null|                null|                null|[fictional location]|[genoshans *, x-m...|                null|[{\"locations\":\"ha...|           [genosha]|[==Publication hi...|[{Publication his...|[2, 2, 3, 3, 3, 3...|  false|{House of M-2 -> ...|{\"House of M-2\":n...|      23|\n|16530|John Radcliffe (p...|  0|    null|1009339636| 996503311|{{For|other simil...|     82835|                null|     Rich Farmbrough|      null|            clean up|      null|2021-02-27 18:00:47|text/x-wiki| wikitext|lnbfajeks5rdozjfw...|  false|[{{For|other simi...|[[[Oxford]], [[Ra...|                null|[<!-- as a major ...|[{{Infobox office...|[{{cite web |titl...|[{{For|other simi...|[{{s-ttl|title=Me...|[[[Category:1652 ...|                null|[[[Oxford]], [[Ra...|                null|                null|                null|                null|                null|      [officeholder]|[1652 births, 171...|                null|[{\"monarch\":\"[[wi...|    [john radcliffe]|[==Life==, ==Anec...|[{Life, 2}, {Anec...|  [2, 2, 2, 2, 2, 2]|  false|{Further reading-...|{\"Further reading...|       6|\n|17703| Leo (constellation)|  0|    null|1012683870|1012683656|{{short descripti...|   8240947|                null|            GenQuest|      null|/* References */ ...|      null|2021-03-17 11:59:27|text/x-wiki| wikitext|sj4k0gif7grqmfem1...|  false|[{{short descript...|[[[constellation]...|                null|                null|[{{Infobox conste...|[{{cite web|url=h...|[{{short descript...|                null|[[[Category:Leo (...|[[[File:Phot-33c-...|[[[constellation]...|[[[Image:Leo.svg|...|                null|                null|                null|                null|     [constellation]|[leo (constellati...|                null|[{\"stardistancepc...|               [leo]|[==Features==, ==...|[{Features, 2}, {...|[2, 3, 3, 3, 2, 2...|  false|{Myths-2 -> null,...|{\"Myths-2\":null,\"...|      13|\n+-----+--------------------+---+--------+----------+----------+--------------------+----------+--------------------+--------------------+----------+--------------------+----------+-------------------+-----------+---------+--------------------+-------+--------------------+--------------------+--------------------+--------------------+--------------------+--------------------+--------------------+--------------------+--------------------+--------------------+--------------------+--------------------+--------------------+--------------------+--------------------+--------------------+--------------------+--------------------+--------------------+--------------------+--------------------+--------------------+--------------------+--------------------+-------+--------------------+--------------------+--------+\nonly showing top 20 rows\n\nimport org.apache.spark.sql.SparkSession\n\u001b[1m\u001b[34mspark\u001b[0m: \u001b[1m\u001b[32morg.apache.spark.sql.SparkSession\u001b[0m = org.apache.spark.sql.SparkSession@3aff2ad1\n\u001b[1m\u001b[34mwk_hasbox\u001b[0m: \u001b[1m\u001b[32morg.apache.spark.sql.DataFrame\u001b[0m = [id: bigint, title: string ... 44 more fields]\n"
+          }
+        ]
+      },
+      "apps": [],
+      "runtimeInfos": {
+        "jobUrl": {
+          "propertyName": "jobUrl",
+          "label": "SPARK JOB",
+          "tooltip": "View in Spark web UI",
+          "group": "spark",
+          "values": [
+            {
+              "jobUrl": "http://eco-ubt.hitronhub.home:4040/jobs/job?id=0",
+              "$$hashKey": "object:3477"
+            },
+            {
+              "jobUrl": "http://eco-ubt.hitronhub.home:4040/jobs/job?id=1",
+              "$$hashKey": "object:3478"
+            }
+          ],
+          "interpreterSettingId": "spark"
+        }
+      },
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1618046819895_674899352",
+      "id": "paragraph_1617812606315_128727131",
+      "dateCreated": "2021-04-10T02:26:59-0700",
+      "dateStarted": "2021-04-13T15:12:49-0700",
+      "dateFinished": "2021-04-13T15:13:02-0700",
+      "status": "FINISHED",
+      "focus": true,
+      "$$hashKey": "object:3283"
+    },
+    {
+      "text": "%spark\nimport scala.collection.mutable.WrappedArray\n\ndef tagTopic(topic: String): (WrappedArray[String] => Boolean) = { temps =>\n\tvar flag = false\n\tif (null == temps) {\n\t\tfalse\n\t} else {\n\t\tfor (i <- temps) {\n\t\t\tif (i contains topic) {\n\t\t\t\tflag = true\n\t\t\t}\n\t\t}\n\t\tflag\n\t}\n}\n\nimport org.json4s._\nimport org.json4s.jackson.Serialization.{read, write}\nimport org.json4s.jackson.JsonMethods._\nimport scala.collection.immutable.{Map => ImmutableMap}\n\ndef getField(field: String): (WrappedArray[String] => List[String]) = { jsonStrs =>\n\tif (null == jsonStrs) {\n\t\tnull\n\t} else {\n\t\timplicit val formats = DefaultFormats\n\t\tval valLst = jsonStrs.toList.map( jsonStr => {\n\t\t    if (null == jsonStr || \"\" == jsonStr.trim) {\n\t\t        null\n\t\t    } else {\n\t\t        val iBoxMap = parse(jsonStr).extract[ImmutableMap[String, String]]\n\t\t        if (iBoxMap.contains(field)) {\n\t\t            iBoxMap(field).replaceAll(\"'\", \"\")\n\t\t        } else {\n\t\t            null\n\t\t        }\n\t\t    }\n\t\t})\n\t\t\n\t\tif (valLst.count(_ == null)+valLst.count(_ == \"\") == valLst.size || valLst.isEmpty) null else valLst\n\t}\n}\n\n\nval topic = \"organization\"\nval tagOrgUDF = udf(tagTopic(topic))\n\nval parentField = \"parent_organization\"\nval getParentUDF = udf(getField(parentField))\n//get infobox name",
+      "user": "anonymous",
+      "dateUpdated": "2021-04-13T15:13:02-0700",
+      "progress": 0,
+      "config": {
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12,
+        "editorMode": "ace/mode/scala",
+        "fontSize": 9,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "import scala.collection.mutable.WrappedArray\n\u001b[1m\u001b[34mtagTopic\u001b[0m: \u001b[1m\u001b[32m(topic: String)scala.collection.mutable.WrappedArray[String] => Boolean\u001b[0m\nimport org.json4s._\nimport org.json4s.jackson.Serialization.{read, write}\nimport org.json4s.jackson.JsonMethods._\nimport scala.collection.immutable.{Map=>ImmutableMap}\n\u001b[1m\u001b[34mgetField\u001b[0m: \u001b[1m\u001b[32m(field: String)scala.collection.mutable.WrappedArray[String] => List[String]\u001b[0m\n\u001b[1m\u001b[34mtopic\u001b[0m: \u001b[1m\u001b[32mString\u001b[0m = organization\n\u001b[1m\u001b[34mtagOrgUDF\u001b[0m: \u001b[1m\u001b[32morg.apache.spark.sql.expressions.UserDefinedFunction\u001b[0m = SparkUserDefinedFunction($Lambda$3625/2097731118@571bdf80,BooleanType,List(Some(class[value[0]: array<string>])),Some(class[value[0]: boolean]),None,false,true)\n\u001b[1m\u001b[34mparentField\u001b[0m: \u001b[1m\u001b[32mString\u001b[0m = parent_...\n"
+          }
+        ]
+      },
+      "apps": [],
+      "runtimeInfos": {},
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1618046819895_1855925825",
+      "id": "paragraph_1617812652742_721675883",
+      "dateCreated": "2021-04-10T02:26:59-0700",
+      "dateStarted": "2021-04-13T15:13:02-0700",
+      "dateFinished": "2021-04-13T15:13:03-0700",
+      "status": "FINISHED",
+      "$$hashKey": "object:3284"
+    },
+    {
+      "text": "%spark\nval wk_tagorg = wk_hasbox.withColumn(\"isOrg\", tagOrgUDF($\"ibox_temp\"))\nval wk_org_loose = wk_tagorg.filter($\"isOrg\" === true)\nval wk_orgpar = wk_org_loose.withColumn(\"orgPar\", getParentUDF($\"ibox_json\"))\nval wk_org_strict = wk_orgpar.filter(array_contains($\"ibox_temp\", \"organization\"))\n\nval wk_org = wk_orgpar\nwk_org.printSchema\nwk_org.show",
+      "user": "anonymous",
+      "dateUpdated": "2021-04-13T15:13:03-0700",
+      "progress": 0,
+      "config": {
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12,
+        "editorMode": "ace/mode/scala",
+        "fontSize": 9,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "root\n |-- id: long (nullable = true)\n |-- title: string (nullable = true)\n |-- ns: long (nullable = true)\n |-- redirect: string (nullable = true)\n |-- rev_id: long (nullable = true)\n |-- rev_pid: long (nullable = true)\n |-- rev_text: string (nullable = true)\n |-- rev_ctr_id: long (nullable = true)\n |-- rev_ctr_ip: string (nullable = true)\n |-- rev_ctr_user: string (nullable = true)\n |-- rev_ctr_st: string (nullable = true)\n |-- rev_cmt: string (nullable = true)\n |-- rev_cmt_st: string (nullable = true)\n |-- rev_ts: timestamp (nullable = true)\n |-- rev_foramt: string (nullable = true)\n |-- rev_model: string (nullable = true)\n |-- rev_sha1: string (nullable = true)\n |-- unclose: boolean (nullable = true)\n |-- dbrace: array (nullable = true)\n |    |-- element: string (containsNull = true)\n |-- dbracket: array (nullable = true)\n |    |-- element: string (containsNull = true)\n |-- bpipe: array (nullable = true)\n |    |-- element: string (containsNull = true)\n |-- cmt: array (nullable = true)\n |    |-- element: string (containsNull = true)\n |-- ibox: array (nullable = true)\n |    |-- element: string (containsNull = true)\n |-- cite: array (nullable = true)\n |    |-- element: string (containsNull = true)\n |-- dbrace1: array (nullable = true)\n |    |-- element: string (containsNull = true)\n |-- dbrace0: array (nullable = true)\n |    |-- element: string (containsNull = true)\n |-- cate: array (nullable = true)\n |    |-- element: string (containsNull = true)\n |-- file: array (nullable = true)\n |    |-- element: string (containsNull = true)\n |-- dbraket1: array (nullable = true)\n |    |-- element: string (containsNull = true)\n |-- dbracket0: array (nullable = true)\n |    |-- element: string (containsNull = true)\n |-- wtable: array (nullable = true)\n |    |-- element: string (containsNull = true)\n |-- tbox: array (nullable = true)\n |    |-- element: string (containsNull = true)\n |-- bpipe1: array (nullable = true)\n |    |-- element: string (containsNull = true)\n |-- bpipe0: array (nullable = true)\n |    |-- element: string (containsNull = true)\n |-- ibox_temp: array (nullable = true)\n |    |-- element: string (containsNull = true)\n |-- cate_val: array (nullable = true)\n |    |-- element: string (containsNull = true)\n |-- table_json: string (nullable = true)\n |-- ibox_json: array (nullable = true)\n |    |-- element: string (containsNull = true)\n |-- ibox_name: array (nullable = true)\n |    |-- element: string (containsNull = true)\n |-- hdstr: array (nullable = true)\n |    |-- element: string (containsNull = true)\n |-- hdtu: array (nullable = true)\n |    |-- element: struct (containsNull = true)\n |    |    |-- _1: string (nullable = true)\n |    |    |-- _2: integer (nullable = true)\n |-- level: array (nullable = true)\n |    |-- element: integer (containsNull = true)\n |-- badtree: boolean (nullable = true)\n |-- tree_map: map (nullable = true)\n |    |-- key: string\n |    |-- value: array (valueContainsNull = true)\n |    |    |-- element: string (containsNull = true)\n |-- tree_json: string (nullable = true)\n |-- tree_amt: integer (nullable = true)\n |-- isOrg: boolean (nullable = false)\n |-- orgPar: array (nullable = true)\n |    |-- element: string (containsNull = true)\n\n+-------+--------------------+---+--------+----------+----------+--------------------+----------+--------------------+------------------+----------+--------------------+----------+-------------------+-----------+---------+--------------------+-------+--------------------+--------------------+--------------------+--------------------+--------------------+--------------------+--------------------+--------------------+--------------------+--------------------+--------------------+--------------------+--------------------+----+------+--------------------+--------------------+--------------------+--------------------+--------------------+--------------------+--------------------+--------------------+--------------------+-------+--------------------+--------------------+--------+-----+--------------------+\n|     id|               title| ns|redirect|    rev_id|   rev_pid|            rev_text|rev_ctr_id|          rev_ctr_ip|      rev_ctr_user|rev_ctr_st|             rev_cmt|rev_cmt_st|             rev_ts| rev_foramt|rev_model|            rev_sha1|unclose|              dbrace|            dbracket|               bpipe|                 cmt|                ibox|                cite|             dbrace1|             dbrace0|                cate|                file|            dbraket1|           dbracket0|              wtable|tbox|bpipe1|              bpipe0|           ibox_temp|            cate_val|          table_json|           ibox_json|           ibox_name|               hdstr|                hdtu|               level|badtree|            tree_map|           tree_json|tree_amt|isOrg|              orgPar|\n+-------+--------------------+---+--------+----------+----------+--------------------+----------+--------------------+------------------+----------+--------------------+----------+-------------------+-----------+---------+--------------------+-------+--------------------+--------------------+--------------------+--------------------+--------------------+--------------------+--------------------+--------------------+--------------------+--------------------+--------------------+--------------------+--------------------+----+------+--------------------+--------------------+--------------------+--------------------+--------------------+--------------------+--------------------+--------------------+--------------------+-------+--------------------+--------------------+--------+-----+--------------------+\n|   1950|American Civil Li...|  0|    null|1013070652|1012025993|{{for|the conserv...|  41273310|                null|          Aapehill|      null|Redirected hyperl...|      null|2021-03-19 14:24:04|text/x-wiki| wikitext|bhb2l0wn4ycsbooxc...|  false|[{{for|the conser...|[[[nonprofit orga...|[{| class=\"wikita...|[<!-- Please resp...|[{{Infobox organi...|[{{cite web|url=h...|[{{for|the conser...|                null|[[[Category:Ameri...|[[[File:2012- ACL...|[[[nonprofit orga...|                null|[{| class=\"wikita...|null|  null|                null|      [organization]|[american civil l...|[{\"tableName\":\"\",...|[{\"tax_id\":\"13-38...|[american civil l...|[==Overview==, ==...|[{Overview, 2}, {...|[2, 2, 3, 3, 3, 3...|  false|{Civil liberties ...|{\"Civil liberties...|      61| true|                null|\n| 172185|World Economic Forum|  0|    null|1012355042|1012120966|{{Redirect|WEF}}\n...|      null|      110.174.234.64|              null|      null|   /* \"Davos Man\" */|      null|2021-03-15 16:01:46|text/x-wiki| wikitext|m8woub8rnoegxnf65...|  false|[{{Redirect|WEF}}...|[[[Cologny]], [[G...|[{| class=\"wikita...|[<!-- also referr...|[{{Infobox organi...|[{{Cite web|url=h...|[{{Redirect|WEF}}...|                null|[[[Category:1971 ...|[[[File:1971 Open...|[[[Cologny]], [[G...|                null|[{| class=\"wikita...|null|  null|                null|      [organization]|[1971 in economic...|[{\"tableName\":\"cl...|[{\"website\":\"\",\"n...|[world economic f...|[==History==, ==O...|[{History, 2}, {O...|[2, 2, 3, 2, 3, 4...|  false|{Criticism-1 -> [...|{\"Criticism-1\":[\"...|      34| true|                null|\n| 184408|Radio Free Europe...|  0|    null|1011909614|1011718656|{{redirect2|Radio...|  14921723|                null|           Nicat49|      null|                null|      null|2021-03-13 07:07:40|text/x-wiki| wikitext|o8bjpnilo9t2obmq4...|  false|[{{redirect2|Radi...|[[[501(c)(3)]], [...|[{| class=\"wikita...|                null|[{{Infobox organi...|[{{Cite web|last=...|[{{redirect2|Radi...|                null|[[[Category:Radio...|[[[File:Newsroom ...|[[[501(c)(3)]], [...|                null|[{| class=\"wikita...|null|  null|                null|      [organization]|[radio free europ...|[{\"tableName\":\"\",...|[{\"leader_title3\"...|[radio free europ...|[==Early history=...|[{Early history, ...|[2, 3, 3, 3, 2, 3...|  false|{Further reading-...|{\"Further reading...|      24| true|                null|\n| 198193|Project for the N...|  0|    null|1009057062|1008075961|{{short descripti...|   9021902|                null|         FrescoBot|      null|Bot: [[User:Fresc...|      null|2021-02-26 06:05:09|text/x-wiki| wikitext|q4789eymyck2gddye...|  false|[{{short descript...|[[[neoconservativ...|                null|[<!-- *** [[Mitch...|[{{infobox organi...|[{{cite book |las...|[{{short descript...|                null|[[[Category:1997 ...|                null|[[[neoconservativ...|[[[A Clean Break:...|                null|null|  null|                null|      [organization]|[1997 establishme...|                null|[{\"website\":\"\",\"n...|[project for the ...|[==Origins and op...|[{Origins and ope...|[2, 2, 2, 2, 2, 3...|  false|{Project staff-2 ...|{\"Project staff-2...|      16| true|                null|\n| 235985|Der Stahlhelm, Bu...|  0|    null| 996482758| 996205166|{{About|the Germa...|   1174491|                null|           Andkore|      null|                null|      null|2020-12-26 13:40:51|text/x-wiki| wikitext|jhn65wtrwvfdfr37r...|  false|[{{About|the Germ...|[[[World War I|Fi...|[{| style=\"border...|[<!--\n  =========...|[{{Infobox organi...|[{{Cite book |las...|[{{About|the Germ...|                null|[[[Category:Der S...|[[[File:FranzSeld...|[[[World War I|Fi...|                null|                null|null|  null|[{| style=\"border...|      [organization]|[der stahlhelm, b...|                null|[{\"subsidiaries\":...|[der stahlhelm, b...|[==History==, ===...|[{History, 2}, {W...|[2, 3, 3, 2, 2, 2...|  false|{Further reading-...|{\"Further reading...|       8| true|                null|\n| 241185|International Cha...|  0|    null|1005852096| 996975332|{{short descripti...|      null|        194.95.83.13|              null|      null|                null|      null|2021-02-09 11:09:02|text/x-wiki| wikitext|3p8f51pv3o36x2qpq...|  false|[{{short descript...|[[[French languag...|                null|                null|[{{Infobox organi...|[{{Cite web|date=...|[{{short descript...|                null|[[[Category:Inter...|[[[File:Etienne-C...|[[[French languag...|                null|                null|null|  null|                null|      [organization]|[international bu...|                null|[{\"coords\":\"\",\"we...|[international ch...|[== History ==, =...|[{History, 2}, {M...|[2, 2, 2, 3, 3, 3...|  false|{World Chambers F...|{\"World Chambers ...|      24| true|                null|\n| 673296|Broadcasters' Aud...|  0|    null|1008888100| 997197409|{{EngvarB|date=Ju...|      null|      213.205.200.54|              null|      null|                null|      null|2021-02-25 08:08:33|text/x-wiki| wikitext|0kxb5ldbhm2hvjlyf...|  false|[{{EngvarB|date=J...|[[[audience measu...|                null|                null|[{{Infobox organi...|[{{cite web|title...|[{{EngvarB|date=J...|                null|[[[Category:Audie...|[[[File:ITV digit...|[[[audience measu...|                null|                null|null|  null|                null|      [organization]|[audience measure...|                null|[{\"website\":\"\",\"n...|[broadcasters aud...|[==Business==, ==...|[{Business, 2}, {...|     [2, 2, 2, 2, 2]|  false|{References-1 -> ...|{\"References-1\":n...|       5| true|                null|\n| 891655|New Democratic Pa...|  0|    null|1003915753| 991916171|{{Infobox organiz...|  20483999|                null|           Monkbot|      null|[[User:Monkbot/ta...|      null|2021-01-31 00:50:00|text/x-wiki| wikitext|r0jyv1k964wgjbjkl...|  false|[{{Infobox organi...|[[[New Democratic...|                null|                null|[{{Infobox organi...|[{{cite news |tit...|[{{harvnb|NDP Soc...|                null|[[[Category:1998 ...|                null|[[[New Democratic...|                null|                null|null|  null|                null|      [organization]|[1998 establishme...|                null|[{\"membership\":\"\"...|[new democratic p...|[==Origins==, ==P...|[{Origins, 2}, {P...|  [2, 2, 2, 2, 2, 2]|  false|{Policies-1 -> nu...|{\"Policies-1\":nul...|       6| true|                null|\n|1127416| Arctic Winter Games|  0|    null|1011500557|1010230170|{{Infobox sportin...|  12604315|                null|     BenKuykendall|      null|add navbox [[Temp...|      null|2021-03-10 22:10:40|text/x-wiki| wikitext|amec081hzjhi4knr2...|  false|[{{Infobox sporti...|[[[File:Two-foot ...|[{| class=wikitab...|                null|[{{Infobox sporti...|[{{Cite web|url=h...|[{{Reflist}}, {{A...|                null|[[[Category:Arcti...|[[[File:Two-foot ...|[[[Arctic Sea]], ...|[[[:Category:Inui...|[{| class=wikitab...|null|  null|                null|[sporting event o...|[arctic winter ga...|[{\"tableName\":\"\",...|[{\"website\":\"[htt...|[arctic winter ga...|[==Background==, ...|[{Background, 2},...|[2, 3, 2, 2, 2, 2...|  false|{Arctic Winter Ga...|{\"Arctic Winter G...|      10| true|                null|\n|2020474|Rugby League Euro...|  0|    null|1011223783|1009659347|{{Use dmy dates|d...|   1526960|                null|       Nick Number|      null|sp Caribbean [[WP...|      null|2021-03-09 10:39:43|text/x-wiki| wikitext|68s21nzdlnlla9mx6...|  false|[{{Use dmy dates|...|[[[Umbrella organ...|[{| class=\"wikita...|[<!-- A new one i...|[{{Infobox organi...|[{{cite web |url=...|[{{Use dmy dates|...|                null|[[[Category:Rugby...|                null|[[[Umbrella organ...|                null|[{| class=\"wikita...|null|  null|                null|      [organization]|[rugby league gov...|[{\"tableName\":\"\",...|[{\"leader_title3\"...|[european rugby l...|[==History==, ==C...|[{History, 2}, {C...|[2, 2, 2, 3, 2, 3...|  false|{Former Observer ...|{\"Former Observer...|      15| true|[[[international ...|\n|2267526|  National Beta Club|  0|    null|1011006631|1009673625|{{short descripti...|      null|         68.191.4.66|              null|      null|   /* Conventions */|      null|2021-03-08 06:44:36|text/x-wiki| wikitext|bg3nrp06jbaeacwd2...|  false|[{{short descript...|[[[United States]...|                null|                null|[{{Infobox organi...|                null|[{{short descript...|                null|[[[Category:Stude...|                null|[[[United States]...|                null|                null|null|  null|                null|      [organization]|[student societie...|                null|[{\"footnotes\":\"\",...|[national beta club]|[==History and de...|[{History and des...|  [2, 2, 2, 2, 2, 2]|  false|{History and desc...|{\"History and des...|       6| true|                null|\n|2339791|International Ult...|  0|    null| 996081454| 990854426|{{redirect|Pulse ...|  38976656|                null|            SK2242|      null|             hatnote|      null|2020-12-24 04:24:06|text/x-wiki| wikitext|esa4ehjtfe97wctae...|  false|[{{redirect|Pulse...|[[[fictional]], [...|                null|                null|[{{Infobox comics...|[{{cite book |las...|[{{redirect|Pulse...|                null|[[[Category:DC Co...|                null|[[[fictional]], [...|                null|                null|null|  null|                null|[comics organizat...|[dc comics superh...|                null|[{\"name\":\"interna...|[international ul...|[== History ==, =...|[{History, 2}, {F...|[2, 2, 3, 3, 3, 3...|  false|{4-D-2 -> null, L...|{\"4-D-2\":null,\"Li...|      21| true|                null|\n|2440600|           Code Pink|  0|    null|1010664741|1010479292|{{short descripti...|      null|      37.142.167.207|              null|      null|Undid revision 10...|      null|2021-03-06 09:23:31|text/x-wiki| wikitext|3mflqerowvtdd0nev...|  false|[{{short descript...|[[[Non-government...|                null|                null|[{{Infobox organi...|[{{cite news|last...|[{{short descript...|                null|[[[Category:2002 ...|[[[File:161 Code ...|[[[Non-government...|[[[Code Pink: Wom...|                null|null|  null|                null|      [organization]|[2002 establishme...|                null|[{\"leader_title3\"...|[code pink: women...|[==History==, ===...|[{History, 2}, {D...|[2, 3, 3, 3, 3, 3...|  false|{Halloween 2009 W...|{\"Halloween 2009 ...|      14| true|                null|\n|2456067|    Chinmaya Mission|  0|    null|1009184855| 996735686|{{Advert|date=Feb...|      null|2405:201:D002:81A...|              null|      null|/* After Chinmaya...|      null|2021-02-26 21:25:38|text/x-wiki| wikitext|i6q5ep5hp0o3xj8bz...|  false|[{{Advert|date=Fe...|[[[Hindu]], [[Ved...|                null|[<!--============...|[{{Infobox organi...|[{{cite web |url=...|[{{Advert|date=Fe...|                null|[[[Category:Relig...|                null|[[[Hindu]], [[Ved...|                null|                null|null|  null|                null|      [organization]|[religious organi...|                null|[{\"coords\":\"\",\"we...|  [chinmaya mission]|[==History==, ===...|[{History, 2}, {F...|[2, 3, 3, 2, 3, 3...|  false|{Cultural field-2...|{\"Cultural field-...|      18| true|                null|\n|2495656|International Ins...|  0|    null|1010050196|1008130223|{{Infobox organiz...|   9784415|                null|        Tom.Reding|      null|+{{[[Template:Aut...|      null|2021-03-03 07:33:29|text/x-wiki| wikitext|oxpune0mbcpfdjc05...|  false|[{{Infobox organi...|[[[non-profit]], ...|                null|                null|[{{Infobox organi...|[{{cite web|url=h...|[{{third-party|se...|                null|[[[Category:Non-p...|                null|[[[non-profit]], ...|                null|                null|null|  null|                null|      [organization]|[non-profit organ...|                null|[{\"coords\":\"\",\"me...|[international in...|[== Core approach...|[{Core approach, ...|[2, 2, 3, 3, 3, 3...|  false|{Advancing Educat...|{\"Advancing Educa...|      12| true|                null|\n|3394085|Association of Ch...|  0|    null|1010727270| 997004871|{{Primary sources...|  39777119|                null|      Shadowrvn728|      null| /* Lawsuit */ comma|      null|2021-03-06 16:01:18|text/x-wiki| wikitext|781jp5z5pceexgtf2...|  false|[{{Primary source...|[[[Evangelicalism...|                null|                null|[{{infobox Organi...|[{{cite web|url=h...|[{{Primary source...|                null|[[[Category:Chris...|                null|[[[Evangelicalism...|[[[Wikisource:Kit...|                null|null|  null|                null|      [organization]|[christian school...|                null|[{\"membership\":\"2...|[association of c...|[==Purposes==, ==...|[{Purposes, 2}, {...|     [2, 2, 2, 2, 2]|  false|{References-1 -> ...|{\"References-1\":n...|       5| true|                null|\n|3718094|Popular Front for...|  0|    null| 956907579| 956905178|{{Infobox militan...|   7611264|                null|         AnomieBOT|      null|Dating maintenanc...|      null|2020-05-15 16:42:03|text/x-wiki| wikitext|is4g4jef6uw3t26cn...|  false|[{{Infobox milita...|[[[Wadie Haddad]]...|                null|                null|[{{Infobox milita...|                null|[{{DEFAULTSORT:Po...|                null|[[[Category:Arab ...|                null|[[[Wadie Haddad]]...|                null|                null|null|  null|                null|[militant organiz...|[arab nationalist...|                null|[{\"area\":\"[[middl...|[popular front fo...|                null|                null|                null|  false|                null|                null|    null| true|                null|\n|3857440|Great Commission ...|  0|    null|1003056711| 960042986|{{Redirect|GCLA|t...|  20483999|                null|           Monkbot|      null|[[User:Monkbot/ta...|      null|2021-01-26 22:10:13|text/x-wiki| wikitext|8xgzu9h9v5wd6vida...|  false|[{{Redirect|GCLA|...|[[[Evangelicalism...|                null|[<!-- Bot generat...|[{{Infobox organi...|[{{Cite web|url=h...|[{{Redirect|GCLA|...|[{{multiple issue...|[[[Category:Great...|                null|[[[Evangelicalism...|[[[Image:Rock at ...|                null|null|  null|                null|      [organization]|[great commission...|                null|[{\"footnotes\":\"\",...|[great commission...|[==History<ref>{{...|[{History<ref>{{C...|[2, 3, 3, 3, 3, 3...|  false|{Criticism-1 -> [...|{\"Criticism-1\":[\"...|      31| true|                null|\n|3920659|London Salvage Corps|  0|    null| 980919860| 943965464|{{update|date=Jan...|   3138265|                null|         WOSlinker|      null|update infobox or...|      null|2020-09-29 00:30:03|text/x-wiki| wikitext|tl2ne567dg1bt2q1u...|  false|[{{update|date=Ja...|[[[London]], [[Li...|                null|                null|[{{Infobox organi...|[{{cite EB1911|ws...|[{{update|date=Ja...|                null|[[[Category:Defun...|                null|[[[London]], [[Li...|                null|                null|null|  null|                null|      [organization]|[defunct fire and...|                null|[{\"footnotes\":\"\",...|[london salvage c...|[==History==, == ...|[{History, 2}, {H...|[2, 2, 3, 3, 3, 2...|  false|{Scandal-1 -> nul...|{\"Scandal-1\":null...|      10| true|                null|\n|4054532|Isabella Freedman...|  0|    null| 961957643| 936867981|{{Infobox organiz...|  27015025|                null|InternetArchiveBot|      null|Bluelink 1 book f...|      null|2020-06-11 02:13:39|text/x-wiki| wikitext|tvm37a6entd9ze0ui...|  false|[{{Infobox organi...|[[[Hazon]], [[Lit...|                null|                null|[{{Infobox organi...|[{{cite web |url=...|[{{Reflist|2}}, {...|                null|[[[Category:Jewis...|                null|[[[Hazon]], [[Lit...|                null|                null|null|  null|                null|      [organization]|[jewish summer ca...|                null|[{\"footnotes\":\"\",...|[isabell freedman...|[== History ==, =...|[{History, 2}, {T...|        [2, 2, 2, 2]|  false|{History-1 -> nul...|{\"History-1\":null...|       4| true|         [[[hazon]]]|\n+-------+--------------------+---+--------+----------+----------+--------------------+----------+--------------------+------------------+----------+--------------------+----------+-------------------+-----------+---------+--------------------+-------+--------------------+--------------------+--------------------+--------------------+--------------------+--------------------+--------------------+--------------------+--------------------+--------------------+--------------------+--------------------+--------------------+----+------+--------------------+--------------------+--------------------+--------------------+--------------------+--------------------+--------------------+--------------------+--------------------+-------+--------------------+--------------------+--------+-----+--------------------+\nonly showing top 20 rows\n\n\u001b[1m\u001b[34mwk_tagorg\u001b[0m: \u001b[1m\u001b[32morg.apache.spark.sql.DataFrame\u001b[0m = [id: bigint, title: string ... 45 more fields]\n\u001b[1m\u001b[34mwk_org_loose\u001b[0m: \u001b[1m\u001b[32morg.apache.spark.sql.Dataset[org.apache.spark.sql.Row]\u001b[0m = [id: bigint, title: string ... 45 more fields]\n\u001b[1m\u001b[34mwk_orgpar\u001b[0m: \u001b[1m\u001b[32morg.apache.spark.sql.DataFrame\u001b[0m = [id: bigint, title: string ... 46 more fields]\n\u001b[1m\u001b[34mwk_org_strict\u001b[0m: \u001b[1m\u001b[32morg.apache.spark.sql.Dataset[org.apache.spark.sql.Row]\u001b[0m = [id: bigint, title: string ... 46 more fields]\n\u001b[1m\u001b[34mwk_org\u001b[0m: \u001b[1m\u001b[32morg.apache.spark.sql.DataFrame\u001b[0m = [id: bigint, title: string ... 46 more fields]\n"
+          }
+        ]
+      },
+      "apps": [],
+      "runtimeInfos": {
+        "jobUrl": {
+          "propertyName": "jobUrl",
+          "label": "SPARK JOB",
+          "tooltip": "View in Spark web UI",
+          "group": "spark",
+          "values": [
+            {
+              "jobUrl": "http://eco-ubt.hitronhub.home:4040/jobs/job?id=2",
+              "$$hashKey": "object:3592"
+            }
+          ],
+          "interpreterSettingId": "spark"
+        }
+      },
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1618046819895_1280154622",
+      "id": "paragraph_1617812707472_1306874693",
+      "dateCreated": "2021-04-10T02:26:59-0700",
+      "dateStarted": "2021-04-13T15:13:03-0700",
+      "dateFinished": "2021-04-13T15:13:05-0700",
+      "status": "FINISHED",
+      "$$hashKey": "object:3285"
+    },
+    {
+      "text": "%spark\nval testLooseOrg = wk_org.select($\"ibox_temp\", $\"ibox_name\", $\"orgPar\", $\"isOrg\")\ntestLooseOrg.show(false)\n\nval testStrictOrg = wk_org_strict.select($\"ibox_temp\", $\"ibox_name\", $\"orgPar\", $\"isOrg\")\ntestStrictOrg.show(false)\n\nval testOrgPar = wk_org.select($\"ibox_temp\", $\"ibox_name\", $\"orgPar\", $\"isOrg\").filter($\"orgPar\".isNotNull)\n\nprintln(wk_org_loose.count)\nprintln(wk_org_strict.count)\nprintln(testOrgPar.count)",
+      "user": "anonymous",
+      "dateUpdated": "2021-04-13T15:13:09-0700",
+      "progress": 93,
+      "config": {
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12,
+        "editorMode": "ace/mode/scala",
+        "fontSize": 9,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "+-----------------------------+-----------------------------------------------------------------+--------------------------------+-----+\n|ibox_temp                    |ibox_name                                                        |orgPar                          |isOrg|\n+-----------------------------+-----------------------------------------------------------------+--------------------------------+-----+\n|[organization]               |[american civil liberties union]                                 |null                            |true |\n|[organization]               |[world economic forum]                                           |null                            |true |\n|[organization]               |[radio free europe/radio liberty]                                |null                            |true |\n|[organization]               |[project for the new american century (pnac)]                    |null                            |true |\n|[organization]               |[der stahlhelm, bund der frontsoldaten]                          |null                            |true |\n|[organization]               |[international chamber of commerce]                              |null                            |true |\n|[organization]               |[broadcasters audience research board]                           |null                            |true |\n|[organization]               |[new democratic party socialist caucus]                          |null                            |true |\n|[sporting event organization]|[arctic winter games]                                            |null                            |true |\n|[organization]               |[european rugby league]                                          |[[[international rugby league]]]|true |\n|[organization]               |[national beta club]                                             |null                            |true |\n|[comics organization]        |[international ultramarine corps]                                |null                            |true |\n|[organization]               |[code pink: women for peace]                                     |null                            |true |\n|[organization]               |[chinmaya mission]                                               |null                            |true |\n|[organization]               |[international institute of islamic thought]                     |null                            |true |\n|[organization]               |[association of christian schools international]                 |null                            |true |\n|[militant organization]      |[popular front for the liberation of palestine – special command]|null                            |true |\n|[organization]               |[great commission churches]                                      |null                            |true |\n|[organization]               |[london salvage corps]                                           |null                            |true |\n|[organization]               |[isabell freedman jewish retreat center]                         |[[[hazon]]]                     |true |\n+-----------------------------+-----------------------------------------------------------------+--------------------------------+-----+\nonly showing top 20 rows\n\n+--------------+------------------------------------------------+--------------------------------+-----+\n|ibox_temp     |ibox_name                                       |orgPar                          |isOrg|\n+--------------+------------------------------------------------+--------------------------------+-----+\n|[organization]|[american civil liberties union]                |null                            |true |\n|[organization]|[world economic forum]                          |null                            |true |\n|[organization]|[radio free europe/radio liberty]               |null                            |true |\n|[organization]|[project for the new american century (pnac)]   |null                            |true |\n|[organization]|[der stahlhelm, bund der frontsoldaten]         |null                            |true |\n|[organization]|[international chamber of commerce]             |null                            |true |\n|[organization]|[broadcasters audience research board]          |null                            |true |\n|[organization]|[new democratic party socialist caucus]         |null                            |true |\n|[organization]|[european rugby league]                         |[[[international rugby league]]]|true |\n|[organization]|[national beta club]                            |null                            |true |\n|[organization]|[code pink: women for peace]                    |null                            |true |\n|[organization]|[chinmaya mission]                              |null                            |true |\n|[organization]|[international institute of islamic thought]    |null                            |true |\n|[organization]|[association of christian schools international]|null                            |true |\n|[organization]|[great commission churches]                     |null                            |true |\n|[organization]|[london salvage corps]                          |null                            |true |\n|[organization]|[isabell freedman jewish retreat center]        |[[[hazon]]]                     |true |\n|[organization]|[american counseling association]               |null                            |true |\n|[organization]|[pontifical institute for foreign missions]     |null                            |true |\n|[organization]|[miss maine]                                    |null                            |true |\n+--------------+------------------------------------------------+--------------------------------+-----+\nonly showing top 20 rows\n\n26624\n24425\n2114\n\u001b[1m\u001b[34mtestLooseOrg\u001b[0m: \u001b[1m\u001b[32morg.apache.spark.sql.DataFrame\u001b[0m = [ibox_temp: array<string>, ibox_name: array<string> ... 2 more fields]\n\u001b[1m\u001b[34mtestStrictOrg\u001b[0m: \u001b[1m\u001b[32morg.apache.spark.sql.DataFrame\u001b[0m = [ibox_temp: array<string>, ibox_name: array<string> ... 2 more fields]\n\u001b[1m\u001b[34mtestOrgPar\u001b[0m: \u001b[1m\u001b[32morg.apache.spark.sql.Dataset[org.apache.spark.sql.Row]\u001b[0m = [ibox_temp: array<string>, ibox_name: array<string> ... 2 more fields]\n"
+          }
+        ]
+      },
+      "apps": [],
+      "runtimeInfos": {
+        "jobUrl": {
+          "propertyName": "jobUrl",
+          "label": "SPARK JOB",
+          "tooltip": "View in Spark web UI",
+          "group": "spark",
+          "values": [
+            {
+              "jobUrl": "http://eco-ubt.hitronhub.home:4040/jobs/job?id=3",
+              "$$hashKey": "object:3650"
+            },
+            {
+              "jobUrl": "http://eco-ubt.hitronhub.home:4040/jobs/job?id=4",
+              "$$hashKey": "object:3651"
+            },
+            {
+              "jobUrl": "http://eco-ubt.hitronhub.home:4040/jobs/job?id=5",
+              "$$hashKey": "object:3652"
+            },
+            {
+              "jobUrl": "http://eco-ubt.hitronhub.home:4040/jobs/job?id=6",
+              "$$hashKey": "object:3653"
+            },
+            {
+              "jobUrl": "http://eco-ubt.hitronhub.home:4040/jobs/job?id=7",
+              "$$hashKey": "object:3654"
+            }
+          ],
+          "interpreterSettingId": "spark"
+        }
+      },
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1618350255102_1436195778",
+      "id": "paragraph_1618350255102_1436195778",
+      "dateCreated": "2021-04-13T14:44:15-0700",
+      "dateStarted": "2021-04-13T15:13:09-0700",
+      "dateFinished": "2021-04-13T15:13:21-0700",
+      "status": "FINISHED",
+      "$$hashKey": "object:3286"
+    },
+    {
+      "text": "%spark\nwk_org.write.mode(\"overwrite\").parquet(\"hdfs://localhost:9000/data/wk_org_parquet/\")",
+      "user": "anonymous",
+      "dateUpdated": "2021-04-13T15:14:48-0700",
+      "progress": 100,
+      "config": {
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12,
+        "editorMode": "ace/mode/scala",
+        "fontSize": 9,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": []
+      },
+      "apps": [],
+      "runtimeInfos": {
+        "jobUrl": {
+          "propertyName": "jobUrl",
+          "label": "SPARK JOB",
+          "tooltip": "View in Spark web UI",
+          "group": "spark",
+          "values": [
+            {
+              "jobUrl": "http://eco-ubt.hitronhub.home:4040/jobs/job?id=8",
+              "$$hashKey": "object:3718"
+            }
+          ],
+          "interpreterSettingId": "spark"
+        }
+      },
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1618046819896_1789127748",
+      "id": "paragraph_1617814878697_645424829",
+      "dateCreated": "2021-04-10T02:26:59-0700",
+      "dateStarted": "2021-04-13T15:14:48-0700",
+      "dateFinished": "2021-04-13T15:16:52-0700",
+      "status": "FINISHED",
+      "$$hashKey": "object:3287"
+    },
+    {
+      "text": "%spark\n",
+      "user": "anonymous",
+      "dateUpdated": "2021-04-10T20:14:17-0700",
+      "progress": 0,
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "runtimeInfos": {},
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1618110857948_1171768148",
+      "id": "paragraph_1618110857948_1171768148",
+      "dateCreated": "2021-04-10T20:14:17-0700",
+      "status": "READY",
+      "$$hashKey": "object:3288"
+    }
+  ],
+  "name": "DataProduct Orgnization Dataset",
+  "id": "2G3GC1XCV",
+  "defaultInterpreterGroup": "spark",
+  "version": "0.9.0",
+  "noteParams": {},
+  "noteForms": {},
+  "angularObjects": {},
+  "config": {
+    "isZeppelinNotebookCronEnable": false,
+    "looknfeel": "default",
+    "personalizedMode": "false"
+  },
+  "info": {},
+  "path": "/DataProduct Orgnization Dataset"
+}

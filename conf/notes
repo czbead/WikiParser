@@ -1,0 +1,22 @@
+zeppelin ops: zeppelin-damon stop; zeppelin-damon start; zeppelin-damon restart;
+list ubuntu power modes: cat /sys/devices/system/cpu/cpu0/cpufreq/scaling_available_governors;
+check ubuntu power mode: cat /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor
+switch to high performance: echo performance | sudo tee /sys/devices/system/cpu/cpu*/cpufreq/scaling_governor performance
+launch hdfs: hadoop namenode -format; start-dfs.sh
+allow ssh connection: sudo ufw allow ssh &
+ubuntu launch xllvnc: x11vnc -forever -shared -rfbauth ~/.vnc/passwd
+username@ip: echo@192.168.0.37
+databricks spark-xml: com.databricks:spark-xml_2.12:0.12.0
+hdfs leave safemode: hdfs dfsadmin -safemode leave
+	
+Zeppelin-env.sh:
+export JAVA_HOME="/usr/lib/jvm/java-1.8.0-openjdk-amd64"
+export HADOOP_CONF_DIR="/usr/local/hadoop/etc/hadoop"
+export ZEPPELIN_JAVA_OPTS="-Dhdp.version=2.3.1.0-2574"
+export SPARK_HOME="/opt/spark"
+show file size in hdfs: hadoop fs -du -s -h /path
+change hadoop.tmp.dir: default in /tmp; add a property in core-site.xml
+
+ubuntu add new disk: https://askubuntu.com/questions/125257/how-do-i-add-an-additional-hard-drive
+
+

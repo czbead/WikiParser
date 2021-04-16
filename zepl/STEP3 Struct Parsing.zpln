@@ -1,0 +1,321 @@
+﻿{
+  "paragraphs": [
+    {
+      "text": "%spark\nimport org.apache.spark.sql.SparkSession\nval spark = SparkSession.builder.getOrCreate()\nval wk_rawst = spark.read.parquet(\"hdfs://localhost:9000/data/wk_rawst_parquet/\")\n\nwk_rawst.printSchema\nwk_rawst.show",
+      "user": "anonymous",
+      "dateUpdated": "2021-04-13T13:10:32-0700",
+      "progress": 0,
+      "config": {
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12,
+        "editorMode": "ace/mode/scala",
+        "fontSize": 9,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "root\n |-- id: long (nullable = true)\n |-- unclose: boolean (nullable = true)\n |-- dbrace: array (nullable = true)\n |    |-- element: string (containsNull = true)\n |-- dbracket: array (nullable = true)\n |    |-- element: string (containsNull = true)\n |-- bpipe: array (nullable = true)\n |    |-- element: string (containsNull = true)\n |-- cmt: array (nullable = true)\n |    |-- element: string (containsNull = true)\n |-- ibox: array (nullable = true)\n |    |-- element: string (containsNull = true)\n |-- cite: array (nullable = true)\n |    |-- element: string (containsNull = true)\n |-- dbrace1: array (nullable = true)\n |    |-- element: string (containsNull = true)\n |-- dbrace0: array (nullable = true)\n |    |-- element: string (containsNull = true)\n |-- cate: array (nullable = true)\n |    |-- element: string (containsNull = true)\n |-- file: array (nullable = true)\n |    |-- element: string (containsNull = true)\n |-- dbraket1: array (nullable = true)\n |    |-- element: string (containsNull = true)\n |-- dbracket0: array (nullable = true)\n |    |-- element: string (containsNull = true)\n |-- wtable: array (nullable = true)\n |    |-- element: string (containsNull = true)\n |-- tbox: array (nullable = true)\n |    |-- element: string (containsNull = true)\n |-- bpipe1: array (nullable = true)\n |    |-- element: string (containsNull = true)\n |-- bpipe0: array (nullable = true)\n |    |-- element: string (containsNull = true)\n\n+------+-------+--------------------+--------------------+--------------------+--------------------+--------------------+--------------------+--------------------+--------------------+--------------------+--------------------+--------------------+---------+--------------------+----+------+------+\n|    id|unclose|              dbrace|            dbracket|               bpipe|                 cmt|                ibox|                cite|             dbrace1|             dbrace0|                cate|                file|            dbraket1|dbracket0|              wtable|tbox|bpipe1|bpipe0|\n+------+-------+--------------------+--------------------+--------------------+--------------------+--------------------+--------------------+--------------------+--------------------+--------------------+--------------------+--------------------+---------+--------------------+----+------+------+\n|135503|  false|[{{Infobox settle...|[[[census-designa...|                null|                null|[{{Infobox settle...|[{{cite web| url=...|[{{convert|25|mi}...|                null|[[[Category:Censu...|                null|[[[census-designa...|     null|                null|null|  null|  null|\n|135504|  false|[{{More citations...|[[[Bexar County, ...|                null|                null|[{{Infobox settle...|[{{cite web| url=...|[{{More citations...|[{{As of|2010|\nal...|[[[Category:Citie...|                null|[[[Bexar County, ...|     null|                null|null|  null|  null|\n|135505|  false|[{{Infobox settle...|[[[Bexar County, ...|                null|                null|[{{Infobox settle...|                null|[{{nowrap|[[Great...|[{{US Census popu...|[[[Category:Citie...|                null|[[[Bexar County, ...|     null|                null|null|  null|  null|\n|135506|  false|[{{Infobox settle...|[[[Bexar County, ...|[{| class=\"wikita...|                null|[{{Infobox settle...|                null|[{{convert|30.1|s...|[{{US Census popu...|[[[Category:Towns...|                null|[[[Bexar County, ...|     null|[{| class=\"wikita...|null|  null|  null|\n|135507|  false|[{{More citations...|[[[Bexar County, ...|                null|                null|[{{Infobox settle...|[{{cite web| url=...|[{{More citations...|[{{US Census popu...|[[[Category:Citie...|                null|[[[Bexar County, ...|     null|                null|null|  null|  null|\n|135508|  false|[{{Infobox settle...|[[[census-designa...|                null|                null|[{{Infobox settle...|[{{cite web| url=...|[{{convert|22|mi}...|                null|[[[Category:Censu...|                null|[[[census-designa...|     null|                null|null|  null|  null|\n|135509|  false|[{{Infobox settle...|[[[Bexar County, ...|                null|                null|[{{Infobox settle...|[{{cite web| url=...|[{{Coord|29|33|10...|[{{US Census popu...|[[[Category:Citie...|                null|[[[Bexar County, ...|     null|                null|null|  null|  null|\n|135510|  false|[{{Infobox settle...|[[[Bexar County, ...|                null|[<!-- out of date...|[{{Infobox settle...|[{{cite web| url=...|[{{convert|11|mi}...|[{{US Census popu...|[[[Category:Citie...|                null|[[[Bexar County, ...|     null|                null|null|  null|  null|\n|135511|  false|[{{Infobox settle...|[[[Blanco County,...|                null|                null|[{{Infobox settle...|[{{cite web| url=...|[{{IPAc-en|ˈ|b|l|...|[{{Weather box\n|l...|[[[Category:Citie...|                null|[[[Blanco County,...|     null|                null|null|  null|  null|\n|135512|  false|[{{Distinguish|Jo...|[[[File:Downtown ...|                null|[<!-- for current...|[{{Infobox settle...|[{{cite web|url=h...|[{{Distinguish|Jo...|[{{Weather box \n|...|[[[Category:Citie...|[[[File:Downtown ...|[[[county seat]],...|     null|                null|null|  null|  null|\n|135513|  false|[{{short descript...|[[[Blanco County,...|                null|                null|[{{Infobox settle...|[{{cite web| url=...|[{{short descript...|[{{US Census popu...|[[[Category:Towns...|                null|[[[Blanco County,...|     null|                null|null|  null|  null|\n|135514|  false|[{{More citations...|[[[Bosque County,...|                null|[<!--consensus re...|[{{Infobox settle...|[{{Cite web|url=h...|[{{More citations...|[{{US Census popu...|[[[Category:Citie...|                null|[[[Bosque County,...|     null|                null|null|  null|  null|\n|135515|  false|[{{Infobox settle...|[[[Bosque County,...|                null|                null|[{{Infobox settle...|[{{Cite web| url=...|[{{coord|31|46|25...|[{{US Census popu...|[[[Category:Citie...|                null|[[[Bosque County,...|     null|                null|null|  null|  null|\n|135516|  false|[{{Infobox settle...|[[[Bosque County,...|                null|                null|[{{Infobox settle...|[{{Cite web| url=...|[{{IPAc-en|ˈ|aɪər...|[{{US Census popu...|[[[Category:Citie...|                null|[[[Bosque County,...|     null|                null|null|  null|  null|\n|135517|  false|[{{Infobox settle...|[[[county seat]],...|                null|                null|[{{Infobox settle...|[{{cite web|url=h...|[{{coord|31|55|29...|[{{US Census popu...|[[[Category:Citie...|                null|[[[county seat]],...|     null|                null|null|  null|  null|\n|135518|  false|[{{Infobox settle...|[[[Bosque County,...|                null|                null|[{{Infobox settle...|[{{Cite web| url=...|[{{coord|32|1|1|N...|[{{US Census popu...|[[[Category:Citie...|                null|[[[Bosque County,...|     null|                null|null|  null|  null|\n|135519|  false|[{{for|the town i...|[[[Bosque County,...|                null|                null|[{{Infobox settle...|[{{cite web|url=h...|[{{for|the town i...|[{{US Census popu...|[[[Category:Citie...|                null|[[[Bosque County,...|     null|                null|null|  null|  null|\n|135520|  false|[{{Infobox settle...|[[[Bowie County, ...|                null|                null|[{{Infobox settle...|[{{cite web|url=h...|[{{IPAc-en|d|ᵻ|_|...|[{{US Census popu...|[[[Category:Citie...|                null|[[[Bowie County, ...|     null|                null|null|  null|  null|\n|135521|  false|[{{Infobox settle...|[[[Bowie County, ...|                null|                null|[{{Infobox settle...|[{{cite web|url=h...|[{{coord|33|28|10...|[{{US Census popu...|[[[Category:Citie...|                null|[[[Bowie County, ...|     null|                null|null|  null|  null|\n|135522|  false|[{{Infobox settle...|[[[Bowie County, ...|                null|                null|[{{Infobox settle...|[{{cite web| url=...|[{{coord|33|28|10...|[{{US Census popu...|[[[Category:Citie...|                null|[[[Bowie County, ...|     null|                null|null|  null|  null|\n+------+-------+--------------------+--------------------+--------------------+--------------------+--------------------+--------------------+--------------------+--------------------+--------------------+--------------------+--------------------+---------+--------------------+----+------+------+\nonly showing top 20 rows\n\nimport org.apache.spark.sql.SparkSession\n\u001b[1m\u001b[34mspark\u001b[0m: \u001b[1m\u001b[32morg.apache.spark.sql.SparkSession\u001b[0m = org.apache.spark.sql.SparkSession@798070a6\n\u001b[1m\u001b[34mwk_rawst\u001b[0m: \u001b[1m\u001b[32morg.apache.spark.sql.DataFrame\u001b[0m = [id: bigint, unclose: boolean ... 16 more fields]\n"
+          }
+        ]
+      },
+      "apps": [],
+      "runtimeInfos": {
+        "jobUrl": {
+          "propertyName": "jobUrl",
+          "label": "SPARK JOB",
+          "tooltip": "View in Spark web UI",
+          "group": "spark",
+          "values": [
+            {
+              "jobUrl": "http://eco-ubt.hitronhub.home:4040/jobs/job?id=0",
+              "$$hashKey": "object:864"
+            },
+            {
+              "jobUrl": "http://eco-ubt.hitronhub.home:4040/jobs/job?id=1",
+              "$$hashKey": "object:865"
+            }
+          ],
+          "interpreterSettingId": "spark"
+        }
+      },
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1618046797366_723244304",
+      "id": "paragraph_1617758531888_270871733",
+      "dateCreated": "2021-04-10T02:26:37-0700",
+      "dateStarted": "2021-04-13T13:10:32-0700",
+      "dateFinished": "2021-04-13T13:10:46-0700",
+      "status": "FINISHED",
+      "focus": true,
+      "$$hashKey": "object:670"
+    },
+    {
+      "text": "%spark\nimport scala.collection.mutable.WrappedArray\nimport scala.util.matching.Regex\n\ndef parseField(pattern: Regex): (WrappedArray[String] => WrappedArray[String]) = { strs => \n\tif (null == strs) {\n\t\tnull\n\t} else {\n\t\tvar tmp = \"\"\n\t\tval values = strs.map( str => {\n\t\t\tval firstLine = str.split(\"\\n|\\r\", 2)(0).trim\n\t\t\ttmp = pattern.replaceAllIn(firstLine.toLowerCase, \" \")\n\t\t\ttmp.trim.replaceAll(\" +\", \" \")\n\t\t})\n\t\tvalues\n\t}\n}\n\nimport org.json4s._\nimport org.json4s.jackson.Serialization\nimport org.json4s.jackson.Serialization.write\nimport org.json4s.JsonDSL._\nimport org.json4s.jackson.JsonMethods._\n\ndef parseTable(): (WrappedArray[String] => String) = { tabLst => \n\tif (null == tabLst) {\n\t\tnull \n\t} else {\n\t\tval colPa = \"\\\\{\\\\{.*?\\\\}\\\\}|!|<.*?>|''|\\\\[|\\\\]|\\\\}|(<ref>.*?</ref>)\".r\n\t\tval colPa2 = \"\\\\[\\\\[.*?\\\\]\\\\]\".r\n\t\tval namePa = \"\\\\{\\\\{(.*)\\\\}\\\\}|\\\\+|\\\\||(<ref>.*?</ref>)\".r\n\n\t\tvar wikiTables = tabLst.toList.map( r => {\n\t\t\tvar colName = \"\"\n\t\t\tvar tableName = \"\"\n\n\t\t\tval rawTableName = r.split(\"\\n\").filter(_.trim.startsWith(\"|+\"))\n\t\t\tif (!rawTableName.isEmpty) {\n\t\t\t\tval rawName = rawTableName(0)\n\t\t\t\ttableName = namePa.replaceAllIn(rawName.toLowerCase, \" \").replaceAll(\" +\", \" \").trim\n\t\t\t}\n\n\t\t\tval rawColLst = r.split(\"\\n\").filter(_.trim.startsWith(\"!\"))\n\t\t\tvar realColLst = rawColLst \n\t\t\tif (!rawColLst.isEmpty) {\n\t\t\t\tval firstEle = rawColLst(0)\n\t\t\t\tif (firstEle contains \"!!\") {\n\t\t\t\t\trealColLst = firstEle.split(\"!!\")\n\t\t\t\t}\n\t\t\t}\n\n\t\t\tval tableCols = realColLst.toList.map(a => {\n\t\t\t\tif (a contains \"[[\") {\n\t\t\t\t\tcolPa2.findFirstIn(a).getOrElse(\"\").trim.stripPrefix(\"[[\").stripSuffix(\"]]\").trim.replaceAll(\" +\", \" \").trim\n\t\t\t\t} else {\n\t\t\t\t\tcolName = colPa.replaceAllIn(a.toLowerCase, \" \")\n\t\t\t\t\tcolName.trim.replaceAll(\" +\", \" \").split(\"\\\\|\").filter(x => !(x contains \"=\")).mkString(\" \").trim\n\t\t\t\t}\n\t\t\t})\n\t\t\tMap(\"tableName\" -> tableName, \"tableCols\" -> tableCols)\n\t\t})\n\t\timplicit val formats = DefaultFormats\n\t\twrite(wikiTables)\n\t}\n}\n\nimport scala.collection.mutable.Map\n\ndef parseIBox(): (WrappedArray[String] => List[String]) = { infos =>\n\tif (null == infos) {\n\t\tnull\n\t} else {\n\t    implicit val formats = DefaultFormats\n\t\tval jsonLst = infos.toList.map( info => {\n\t\t\tvar boxName = \"\"\n\t\t\tval lines = info.trim.stripPrefix(\"{{\").stripSuffix(\"}}\").split(\"\\n\").toList\n\t\t\tval firstLine = lines(0)\n\t\t\tval attrLines = lines.filter(_ contains \"=\")\n\n\t\t\tval namePa = \"<.*?>|infobox|\\\\|(.*)|\\\\{|\\\\}|(<ref>.*?</ref>)\".r\n\t\t\tval tmpName = namePa.replaceAllIn(firstLine.toLowerCase, \" \")\n\t\t\tboxName = tmpName.trim.replaceAll(\" +\", \" \")\n\n\t\t\tval attrValPa = \"<.*?>|\\\\{\\\\{.*?\\\\}\\\\}\".r\n\t\t\tval attrsMap = Map[String, String]()\n\t\t\tval attrs = attrLines.map( r => {\n\t\t\t\tval lineEle = r.trim.stripPrefix(\"|\").trim\n\t\t\t\tval lineArr = lineEle.split(\"=\", 2)\n\t\t\t\tval leng = lineArr.length\n\t\t\t\tvar attrName = \"\"\n\t\t\t\tvar attrVal = \"\"\n\t\t\t\tif (leng >= 1) {\n\t\t\t\t\tattrName = lineArr(0).trim.stripPrefix(\"|\").trim \n\t\t\t\t} \n\t\t\t\tif (leng >= 2) {\n\t\t\t\t\tval attrValRaw = lineArr(1).trim.replaceAll(\" +\", \" \")\n\t\t\t\t\tval tempVal = attrValPa.replaceAllIn(attrValRaw.toLowerCase, \" \")\n\t\t\t\t\tattrVal = tempVal.trim.replaceAll(\" +\", \" \")\n\t\t\t\t}\n\t\t\t\t(attrName, attrVal)\n\t\t\t})\n\t\t\tfor (i <- attrs) {\n\t\t\t\tattrsMap += (i._1 -> i._2)\n\t\t\t}\n\t\t\tattrsMap += (\"template\" -> boxName)\n\t\t\twrite(attrsMap.toMap)\n\t\t})\n\t\t\n\t\tif (jsonLst.isEmpty) null else jsonLst\n\t}\n}\n\nimport org.json4s._\nimport org.json4s.jackson.Serialization.{read, write}\nimport org.json4s.jackson.JsonMethods._\nimport scala.collection.immutable.{Map => ImmutableMap}\n\ndef getField(field: String): (WrappedArray[String] => List[String]) = { jsonStrs =>\n\tif (null == jsonStrs) {\n\t\tnull\n\t} else {\n\t\timplicit val formats = DefaultFormats\n\t\tval nameLst = jsonStrs.toList.map( jsonStr => {\n\t\t    if (null == jsonStr || \"\" == jsonStr.trim) {\n\t\t        null\n\t\t    } else {\n\t\t        val iBoxMap = parse(jsonStr).extract[ImmutableMap[String, String]]\n\t\t        if (iBoxMap.contains(field)) {\n\t\t            iBoxMap(field).replaceAll(\"'\", \"\")\n\t\t        } else {\n\t\t            null\n\t\t        }\n\t\t    }\n\t\t})\n\t\t\n\t\tif (nameLst.isEmpty) null else nameLst\n\t}\n}\n\n\nval iBoxTempPa = \"<.*?>|infobox|\\\\|(.*)|\\\\{|\\\\}|(<ref>.*?</ref>)\".r\nval parseIBoxTempUDF = udf(parseField(iBoxTempPa))\n\nval cateValPa = \"category|:|\\\\||\\\\[|\\\\]|(<ref>.*?</ref>)\".r\nval parseCateValUDF = udf(parseField(cateValPa))\n\nval parseTableUDF = udf(parseTable)\nval parseIBoxUDF = udf(parseIBox)\n\nval iBoxNameField = \"name\"\nval getIBoxNameUDF = udf(getField(iBoxNameField))",
+      "user": "anonymous",
+      "dateUpdated": "2021-04-13T13:10:35-0700",
+      "progress": 0,
+      "config": {
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12,
+        "editorMode": "ace/mode/scala",
+        "fontSize": 9,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "import scala.collection.mutable.WrappedArray\nimport scala.util.matching.Regex\n\u001b[1m\u001b[34mparseField\u001b[0m: \u001b[1m\u001b[32m(pattern: scala.util.matching.Regex)scala.collection.mutable.WrappedArray[String] => scala.collection.mutable.WrappedArray[String]\u001b[0m\nimport org.json4s._\nimport org.json4s.jackson.Serialization\nimport org.json4s.jackson.Serialization.write\nimport org.json4s.JsonDSL._\nimport org.json4s.jackson.JsonMethods._\n\u001b[1m\u001b[34mparseTable\u001b[0m: \u001b[1m\u001b[32m()scala.collection.mutable.WrappedArray[String] => String\u001b[0m\nimport scala.collection.mutable.Map\n\u001b[1m\u001b[34mparseIBox\u001b[0m: \u001b[1m\u001b[32m()scala.collection.mutable.WrappedArray[String] => List[String]\u001b[0m\nimport org.json4s._\nimport org.json4s.jackson.Serialization.{read, write}\nimport org.json4s.jackson.JsonMethods._\nimport scala.collection.immut...\n"
+          }
+        ]
+      },
+      "apps": [],
+      "runtimeInfos": {},
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1618046797366_1401704466",
+      "id": "paragraph_1617758562611_1141437721",
+      "dateCreated": "2021-04-10T02:26:37-0700",
+      "dateStarted": "2021-04-13T13:10:35-0700",
+      "dateFinished": "2021-04-13T13:10:47-0700",
+      "status": "FINISHED",
+      "$$hashKey": "object:671"
+    },
+    {
+      "text": "%spark\nval wk_ibox_temp = wk_rawst.withColumn(\"ibox_temp\", parseIBoxTempUDF($\"ibox\"))\nval wk_cate = wk_ibox_temp.withColumn(\"cate_val\", parseCateValUDF($\"cate\"))\nval wk_table_json = wk_cate.withColumn(\"table_json\", parseTableUDF($\"wtable\"))\nval wk_ibox_json = wk_table_json.withColumn(\"ibox_json\", parseIBoxUDF($\"ibox\"))\nval wk_ibox_name = wk_ibox_json.withColumn(\"ibox_name\", getIBoxNameUDF($\"ibox_json\"))\n\nval wk_struct = wk_ibox_name\nwk_struct.printSchema\nwk_struct.show",
+      "user": "anonymous",
+      "dateUpdated": "2021-04-13T10:18:49-0700",
+      "progress": 0,
+      "config": {
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12,
+        "editorMode": "ace/mode/scala",
+        "fontSize": 9,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "root\n |-- id: long (nullable = true)\n |-- unclose: boolean (nullable = true)\n |-- dbrace: array (nullable = true)\n |    |-- element: string (containsNull = true)\n |-- dbracket: array (nullable = true)\n |    |-- element: string (containsNull = true)\n |-- bpipe: array (nullable = true)\n |    |-- element: string (containsNull = true)\n |-- cmt: array (nullable = true)\n |    |-- element: string (containsNull = true)\n |-- ibox: array (nullable = true)\n |    |-- element: string (containsNull = true)\n |-- cite: array (nullable = true)\n |    |-- element: string (containsNull = true)\n |-- dbrace1: array (nullable = true)\n |    |-- element: string (containsNull = true)\n |-- dbrace0: array (nullable = true)\n |    |-- element: string (containsNull = true)\n |-- cate: array (nullable = true)\n |    |-- element: string (containsNull = true)\n |-- file: array (nullable = true)\n |    |-- element: string (containsNull = true)\n |-- dbraket1: array (nullable = true)\n |    |-- element: string (containsNull = true)\n |-- dbracket0: array (nullable = true)\n |    |-- element: string (containsNull = true)\n |-- wtable: array (nullable = true)\n |    |-- element: string (containsNull = true)\n |-- tbox: array (nullable = true)\n |    |-- element: string (containsNull = true)\n |-- bpipe1: array (nullable = true)\n |    |-- element: string (containsNull = true)\n |-- bpipe0: array (nullable = true)\n |    |-- element: string (containsNull = true)\n |-- ibox_temp: array (nullable = true)\n |    |-- element: string (containsNull = true)\n |-- cate_val: array (nullable = true)\n |    |-- element: string (containsNull = true)\n |-- table_json: string (nullable = true)\n |-- ibox_json: array (nullable = true)\n |    |-- element: string (containsNull = true)\n |-- ibox_name: array (nullable = true)\n |    |-- element: string (containsNull = true)\n\n+------+-------+--------------------+--------------------+--------------------+--------------------+--------------------+--------------------+--------------------+--------------------+--------------------+--------------------+--------------------+---------+--------------------+----+------+------+------------+--------------------+--------------------+--------------------+-----------------+\n|    id|unclose|              dbrace|            dbracket|               bpipe|                 cmt|                ibox|                cite|             dbrace1|             dbrace0|                cate|                file|            dbraket1|dbracket0|              wtable|tbox|bpipe1|bpipe0|   ibox_temp|            cate_val|          table_json|           ibox_json|        ibox_name|\n+------+-------+--------------------+--------------------+--------------------+--------------------+--------------------+--------------------+--------------------+--------------------+--------------------+--------------------+--------------------+---------+--------------------+----+------+------+------------+--------------------+--------------------+--------------------+-----------------+\n|135503|  false|[{{Infobox settle...|[[[census-designa...|                null|                null|[{{Infobox settle...|[{{cite web| url=...|[{{convert|25|mi}...|                null|[[[Category:Censu...|                null|[[[census-designa...|     null|                null|null|  null|  null|[settlement]|[census-designate...|                null|[{\"footnotes\":\"\",...|           [null]|\n|135504|  false|[{{More citations...|[[[Bexar County, ...|                null|                null|[{{Infobox settle...|[{{cite web| url=...|[{{More citations...|[{{As of|2010|\nal...|[[[Category:Citie...|                null|[[[Bexar County, ...|     null|                null|null|  null|  null|[settlement]|[cities in bexar ...|                null|[{\"footnotes\":\"\",...|           [null]|\n|135505|  false|[{{Infobox settle...|[[[Bexar County, ...|                null|                null|[{{Infobox settle...|                null|[{{nowrap|[[Great...|[{{US Census popu...|[[[Category:Citie...|                null|[[[Bexar County, ...|     null|                null|null|  null|  null|[settlement]|[cities in bexar ...|                null|[{\"footnotes\":\"\",...|           [null]|\n|135506|  false|[{{Infobox settle...|[[[Bexar County, ...|[{| class=\"wikita...|                null|[{{Infobox settle...|                null|[{{convert|30.1|s...|[{{US Census popu...|[[[Category:Towns...|                null|[[[Bexar County, ...|     null|[{| class=\"wikita...|null|  null|  null|[settlement]|[towns in bexar c...|[{\"tableName\":\"\",...|[{\"footnotes\":\"\",...|           [null]|\n|135507|  false|[{{More citations...|[[[Bexar County, ...|                null|                null|[{{Infobox settle...|[{{cite web| url=...|[{{More citations...|[{{US Census popu...|[[[Category:Citie...|                null|[[[Bexar County, ...|     null|                null|null|  null|  null|[settlement]|[cities in texas,...|                null|[{\"footnotes\":\"\",...|           [null]|\n|135508|  false|[{{Infobox settle...|[[[census-designa...|                null|                null|[{{Infobox settle...|[{{cite web| url=...|[{{convert|22|mi}...|                null|[[[Category:Censu...|                null|[[[census-designa...|     null|                null|null|  null|  null|[settlement]|[census-designate...|                null|[{\"footnotes\":\"\",...|           [null]|\n|135509|  false|[{{Infobox settle...|[[[Bexar County, ...|                null|                null|[{{Infobox settle...|[{{cite web| url=...|[{{Coord|29|33|10...|[{{US Census popu...|[[[Category:Citie...|                null|[[[Bexar County, ...|     null|                null|null|  null|  null|[settlement]|[cities in bexar ...|                null|[{\"footnotes\":\"\",...|           [null]|\n|135510|  false|[{{Infobox settle...|[[[Bexar County, ...|                null|[<!-- out of date...|[{{Infobox settle...|[{{cite web| url=...|[{{convert|11|mi}...|[{{US Census popu...|[[[Category:Citie...|                null|[[[Bexar County, ...|     null|                null|null|  null|  null|[settlement]|[cities in bexar ...|                null|[{\"footnotes\":\"\",...|           [null]|\n|135511|  false|[{{Infobox settle...|[[[Blanco County,...|                null|                null|[{{Infobox settle...|[{{cite web| url=...|[{{IPAc-en|ˈ|b|l|...|[{{Weather box\n|l...|[[[Category:Citie...|                null|[[[Blanco County,...|     null|                null|null|  null|  null|[settlement]|[cities in blanco...|                null|[{\"footnotes\":\"\",...|           [null]|\n|135512|  false|[{{Distinguish|Jo...|[[[File:Downtown ...|                null|[<!-- for current...|[{{Infobox settle...|[{{cite web|url=h...|[{{Distinguish|Jo...|[{{Weather box \n|...|[[[Category:Citie...|[[[File:Downtown ...|[[[county seat]],...|     null|                null|null|  null|  null|[settlement]|[cities in texas,...|                null|[{\"footnotes\":\"\",...|           [null]|\n|135513|  false|[{{short descript...|[[[Blanco County,...|                null|                null|[{{Infobox settle...|[{{cite web| url=...|[{{short descript...|[{{US Census popu...|[[[Category:Towns...|                null|[[[Blanco County,...|     null|                null|null|  null|  null|[settlement]|[towns in blanco ...|                null|[{\"footnotes\":\"\",...|           [null]|\n|135514|  false|[{{More citations...|[[[Bosque County,...|                null|[<!--consensus re...|[{{Infobox settle...|[{{Cite web|url=h...|[{{More citations...|[{{US Census popu...|[[[Category:Citie...|                null|[[[Bosque County,...|     null|                null|null|  null|  null|[settlement]|[cities in texas,...|                null|[{\"footnotes\":\"\",...|           [null]|\n|135515|  false|[{{Infobox settle...|[[[Bosque County,...|                null|                null|[{{Infobox settle...|[{{Cite web| url=...|[{{coord|31|46|25...|[{{US Census popu...|[[[Category:Citie...|                null|[[[Bosque County,...|     null|                null|null|  null|  null|[settlement]|[cities in bosque...|                null|[{\"footnotes\":\"\",...|           [null]|\n|135516|  false|[{{Infobox settle...|[[[Bosque County,...|                null|                null|[{{Infobox settle...|[{{Cite web| url=...|[{{IPAc-en|ˈ|aɪər...|[{{US Census popu...|[[[Category:Citie...|                null|[[[Bosque County,...|     null|                null|null|  null|  null|[settlement]|[cities in bosque...|                null|[{\"footnotes\":\"\",...|           [null]|\n|135517|  false|[{{Infobox settle...|[[[county seat]],...|                null|                null|[{{Infobox settle...|[{{cite web|url=h...|[{{coord|31|55|29...|[{{US Census popu...|[[[Category:Citie...|                null|[[[county seat]],...|     null|                null|null|  null|  null|[settlement]|[cities in texas,...|                null|[{\"footnotes\":\"\",...|[meridian, texas]|\n|135518|  false|[{{Infobox settle...|[[[Bosque County,...|                null|                null|[{{Infobox settle...|[{{Cite web| url=...|[{{coord|32|1|1|N...|[{{US Census popu...|[[[Category:Citie...|                null|[[[Bosque County,...|     null|                null|null|  null|  null|[settlement]|[cities in bosque...|                null|[{\"footnotes\":\"\",...|           [null]|\n|135519|  false|[{{for|the town i...|[[[Bosque County,...|                null|                null|[{{Infobox settle...|[{{cite web|url=h...|[{{for|the town i...|[{{US Census popu...|[[[Category:Citie...|                null|[[[Bosque County,...|     null|                null|null|  null|  null|[settlement]|[cities in bosque...|                null|[{\"footnotes\":\"\",...|           [null]|\n|135520|  false|[{{Infobox settle...|[[[Bowie County, ...|                null|                null|[{{Infobox settle...|[{{cite web|url=h...|[{{IPAc-en|d|ᵻ|_|...|[{{US Census popu...|[[[Category:Citie...|                null|[[[Bowie County, ...|     null|                null|null|  null|  null|[settlement]|[cities in bowie ...|                null|[{\"footnotes\":\"\",...|           [null]|\n|135521|  false|[{{Infobox settle...|[[[Bowie County, ...|                null|                null|[{{Infobox settle...|[{{cite web|url=h...|[{{coord|33|28|10...|[{{US Census popu...|[[[Category:Citie...|                null|[[[Bowie County, ...|     null|                null|null|  null|  null|[settlement]|[cities in texas,...|                null|[{\"footnotes\":\"\",...|           [null]|\n|135522|  false|[{{Infobox settle...|[[[Bowie County, ...|                null|                null|[{{Infobox settle...|[{{cite web| url=...|[{{coord|33|28|10...|[{{US Census popu...|[[[Category:Citie...|                null|[[[Bowie County, ...|     null|                null|null|  null|  null|[settlement]|[cities in bowie ...|                null|[{\"footnotes\":\"\",...|               []|\n+------+-------+--------------------+--------------------+--------------------+--------------------+--------------------+--------------------+--------------------+--------------------+--------------------+--------------------+--------------------+---------+--------------------+----+------+------+------------+--------------------+--------------------+--------------------+-----------------+\nonly showing top 20 rows\n\n\u001b[1m\u001b[34mwk_ibox_temp\u001b[0m: \u001b[1m\u001b[32morg.apache.spark.sql.DataFrame\u001b[0m = [id: bigint, unclose: boolean ... 17 more fields]\n\u001b[1m\u001b[34mwk_cate\u001b[0m: \u001b[1m\u001b[32morg.apache.spark.sql.DataFrame\u001b[0m = [id: bigint, unclose: boolean ... 18 more fields]\n\u001b[1m\u001b[34mwk_table_json\u001b[0m: \u001b[1m\u001b[32morg.apache.spark.sql.DataFrame\u001b[0m = [id: bigint, unclose: boolean ... 19 more fields]\n\u001b[1m\u001b[34mwk_ibox_json\u001b[0m: \u001b[1m\u001b[32morg.apache.spark.sql.DataFrame\u001b[0m = [id: bigint, unclose: boolean ... 20 more fields]\n\u001b[1m\u001b[34mwk_ibox_name\u001b[0m: \u001b[1m\u001b[32morg.apache.spark.sql.DataFrame\u001b[0m = [id: bigint, unclose: boolean ... 21 more fields]\n\u001b[1m\u001b[34mwk_struct\u001b[0m: \u001b[1m\u001b[32morg.apache.spark.sql.DataFrame\u001b[0m = [id: bigint, unclose: boolean ... 21 more fields]\n"
+          }
+        ]
+      },
+      "apps": [],
+      "runtimeInfos": {
+        "jobUrl": {
+          "propertyName": "jobUrl",
+          "label": "SPARK JOB",
+          "tooltip": "View in Spark web UI",
+          "group": "spark",
+          "values": [
+            {
+              "jobUrl": "http://eco-ubt.hitronhub.home:4040/jobs/job?id=2",
+              "$$hashKey": "object:979"
+            }
+          ],
+          "interpreterSettingId": "spark"
+        }
+      },
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1618046797366_1800545348",
+      "id": "paragraph_1617758633354_1633970877",
+      "dateCreated": "2021-04-10T02:26:37-0700",
+      "dateStarted": "2021-04-13T10:18:49-0700",
+      "dateFinished": "2021-04-13T10:18:51-0700",
+      "status": "FINISHED",
+      "$$hashKey": "object:672"
+    },
+    {
+      "text": "%spark\n// wk_struct.select($\"ibox_temp\").filter($\"ibox_temp\".isNotNull).show(false)\n// wk_struct.select($\"cate_val\").filter($\"cate_val\".isNotNull).show(false)\n// wk_struct.select($\"table_json\").filter($\"table_json\".isNotNull).show(false)\n// wk_ibox_json.select($\"ibox_json\").show(false)\n// wk_struct.select($\"ibox_name\").filter($\"ibox_name\".isNotNull).show(100, false)",
+      "user": "anonymous",
+      "dateUpdated": "2021-04-12T20:41:12-0700",
+      "progress": 0,
+      "config": {
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12,
+        "editorMode": "ace/mode/scala",
+        "fontSize": 9,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "+------------------------------------------+\n|ibox_name                                 |\n+------------------------------------------+\n|[autism]                                  |\n|[a]                                       |\n|[alabama, null]                           |\n|[abraham lincoln, null]                   |\n|[aristotle]                               |\n|[an american in paris]                    |\n|[academy award for best production design]|\n|[academy awards, null]                    |\n|[actresses]                               |\n|[animalia]                                |\n|[ayn rand]                                |\n|[alain connes]                            |\n|[allan dwan]                              |\n|[]                                        |\n|[ascii]                                   |\n|[apollo]                                  |\n|[andre agassi]                            |\n|[austroasiatic]                           |\n|[afroasiatic]                             |\n|[null]                                    |\n|[null]                                    |\n|[animal farm]                             |\n|[alaska, null]                            |\n|[aldous huxley, null]                     |\n|[null]                                    |\n|[null]                                    |\n|[null]                                    |\n|[apollo 11, null, null, null, null]       |\n|[apollo 8]                                |\n|[a modest proposal]                       |\n|[andrei tarkovsky, hoffmanniana]          |\n|[abel]                                    |\n|[null]                                    |\n|[aruba]                                   |\n|[null]                                    |\n|[atlantic ocean]                          |\n|[arthur schopenhauer]                     |\n|[null]                                    |\n|[null]                                    |\n|[angolan armed forces]                    |\n|[albert sidney johnston]                  |\n|[alberta]                                 |\n|[albert einstein]                         |\n|[null]                                    |\n|[null]                                    |\n|[null]                                    |\n|[null]                                    |\n|[aikido]                                  |\n|[induced abortion]                        |\n|[null]                                    |\n|[ampere]                                  |\n|[alexander the great]                     |\n|[alfred korzybski]                        |\n|[null]                                    |\n|[aries]                                   |\n|[aquarius]                                |\n|[ankara, ankara district municipalities]  |\n|[arabic]                                  |\n|[alfred hitchcock]                        |\n|[altaic]                                  |\n|[austrian german]                         |\n|[attila]                                  |\n|[aegean sea]                              |\n|[a clockwork orange]                      |\n|[amsterdam]                               |\n|[audi ag]                                 |\n|[alfred nobel]                            |\n|[alexander graham bell]                   |\n|[anatolia]                                |\n|[apple inc.]                              |\n|[null]                                    |\n|[aztlan underground]                      |\n|[null]                                    |\n|[andy warhol]                             |\n|[alp arslan]                              |\n|[american film institute]                 |\n|[akira kurosawa]                          |\n|[analog brothers]                         |\n|[motor neuron disease]                    |\n|[abba]                                    |\n|[messagepad]                              |\n|[a. e. van vogt]                          |\n|[anna kournikova]                         |\n|[alfons maria jakob]                      |\n|[null]                                    |\n|[null]                                    |\n|[null]                                    |\n|[null]                                    |\n|[null]                                    |\n|[null]                                    |\n|[null]                                    |\n|[null]                                    |\n|[advanced chemistry]                      |\n|[anglican communion]                      |\n|[arne kaijser]                            |\n|[andrei andreyevich markov]               |\n|[null]                                    |\n|[null]                                    |\n|[alvin toffler]                           |\n|[null]                                    |\n+------------------------------------------+\nonly showing top 100 rows\n\n"
+          }
+        ]
+      },
+      "apps": [],
+      "runtimeInfos": {
+        "jobUrl": {
+          "propertyName": "jobUrl",
+          "label": "SPARK JOB",
+          "tooltip": "View in Spark web UI",
+          "group": "spark",
+          "values": [
+            {
+              "jobUrl": "http://eco-ubt.hitronhub.home:4040/jobs/job?id=12",
+              "$$hashKey": "object:1037"
+            }
+          ],
+          "interpreterSettingId": "spark"
+        }
+      },
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1618046797367_1429483198",
+      "id": "paragraph_1617758741949_2140404759",
+      "dateCreated": "2021-04-10T02:26:37-0700",
+      "dateStarted": "2021-04-12T20:40:43-0700",
+      "dateFinished": "2021-04-12T20:40:44-0700",
+      "status": "FINISHED",
+      "$$hashKey": "object:673"
+    },
+    {
+      "text": "%spark\nwk_struct.write.mode(\"overwrite\").parquet(\"hdfs://localhost:9000/data/wk_struct_parquet/\")",
+      "user": "anonymous",
+      "dateUpdated": "2021-04-13T10:19:03-0700",
+      "progress": 100,
+      "config": {
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12,
+        "editorMode": "ace/mode/scala",
+        "fontSize": 9,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": []
+      },
+      "apps": [],
+      "runtimeInfos": {
+        "jobUrl": {
+          "propertyName": "jobUrl",
+          "label": "SPARK JOB",
+          "tooltip": "View in Spark web UI",
+          "group": "spark",
+          "values": [
+            {
+              "jobUrl": "http://eco-ubt.hitronhub.home:4040/jobs/job?id=3",
+              "$$hashKey": "object:1085"
+            }
+          ],
+          "interpreterSettingId": "spark"
+        }
+      },
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1618046797368_203160894",
+      "id": "paragraph_1617758743413_855103276",
+      "dateCreated": "2021-04-10T02:26:37-0700",
+      "dateStarted": "2021-04-13T10:19:03-0700",
+      "dateFinished": "2021-04-13T10:25:36-0700",
+      "status": "FINISHED",
+      "$$hashKey": "object:674"
+    },
+    {
+      "text": "%spark\n",
+      "user": "anonymous",
+      "dateUpdated": "2021-04-10T18:57:44-0700",
+      "progress": 0,
+      "config": {
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12,
+        "editorMode": "ace/mode/scala",
+        "fontSize": 9,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": []
+      },
+      "apps": [],
+      "runtimeInfos": {},
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1618046797369_1053918941",
+      "id": "paragraph_1617850988721_966799916",
+      "dateCreated": "2021-04-10T02:26:37-0700",
+      "dateStarted": "2021-04-10T18:57:44-0700",
+      "dateFinished": "2021-04-10T18:57:44-0700",
+      "status": "FINISHED",
+      "$$hashKey": "object:675"
+    }
+  ],
+  "name": "STEP3 Struct Parsing",
+  "id": "2G5VZS3TN",
+  "defaultInterpreterGroup": "spark",
+  "version": "0.9.0",
+  "noteParams": {},
+  "noteForms": {},
+  "angularObjects": {},
+  "config": {
+    "isZeppelinNotebookCronEnable": false,
+    "looknfeel": "default",
+    "personalizedMode": "false"
+  },
+  "info": {},
+  "path": "/STEP3 Struct Parsing"
+}

@@ -1,0 +1,371 @@
+﻿{
+  "paragraphs": [
+    {
+      "text": "%spark\nimport org.apache.spark.sql.SparkSession\nimport com.databricks.spark.xml._\nval spark = SparkSession.builder.getOrCreate()\nval wk_raw = spark.read.format(\"com.databricks.spark.xml\").option(\"rowTag\", \"page\").load(\"hdfs://localhost:9000/data/wk.xml.bz2\")\nwk_raw.printSchema\nwk_raw.show",
+      "user": "anonymous",
+      "dateUpdated": "2021-04-13T02:21:42-0700",
+      "progress": 0,
+      "config": {
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12,
+        "editorMode": "ace/mode/scala",
+        "fontSize": 9,
+        "results": {},
+        "enabled": true,
+        "editorHide": false
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "root\n |-- id: long (nullable = true)\n |-- ns: long (nullable = true)\n |-- redirect: struct (nullable = true)\n |    |-- _VALUE: string (nullable = true)\n |    |-- _title: string (nullable = true)\n |-- revision: struct (nullable = true)\n |    |-- comment: struct (nullable = true)\n |    |    |-- _VALUE: string (nullable = true)\n |    |    |-- _deleted: string (nullable = true)\n |    |-- contributor: struct (nullable = true)\n |    |    |-- _VALUE: string (nullable = true)\n |    |    |-- _deleted: string (nullable = true)\n |    |    |-- id: long (nullable = true)\n |    |    |-- ip: string (nullable = true)\n |    |    |-- username: string (nullable = true)\n |    |-- format: string (nullable = true)\n |    |-- id: long (nullable = true)\n |    |-- minor: string (nullable = true)\n |    |-- model: string (nullable = true)\n |    |-- parentid: long (nullable = true)\n |    |-- sha1: string (nullable = true)\n |    |-- text: struct (nullable = true)\n |    |    |-- _VALUE: string (nullable = true)\n |    |    |-- _bytes: long (nullable = true)\n |    |    |-- _xml:space: string (nullable = true)\n |    |-- timestamp: timestamp (nullable = true)\n |-- title: string (nullable = true)\n\n+---+---+--------------------+--------------------+--------------------+\n| id| ns|            redirect|            revision|               title|\n+---+---+--------------------+--------------------+--------------------+\n| 10|  0|{null, Computer a...|{{shel, null}, {n...| AccessibleComputing|\n| 12|  0|                null|{{Cleaned up 12 I...|           Anarchism|\n| 13|  0|{null, History of...|{{+{{Redirect cat...|  AfghanistanHistory|\n| 14|  0|{null, Geography ...|{{+{{Redirect cat...|AfghanistanGeography|\n| 15|  0|{null, Demographi...|{{+{{Redirect cat...|   AfghanistanPeople|\n| 18|  0|{null, Communicat...|{{+{{Redirect cat...|AfghanistanCommun...|\n| 19|  0|{null, Transport ...|{{+{{R category s...|AfghanistanTransp...|\n| 20|  0|{null, Afghan Arm...|{{+{{R category s...| AfghanistanMilitary|\n| 21|  0|{null, Foreign re...|{{+{{R category s...|AfghanistanTransn...|\n| 23|  0|{null, Assistive ...|{{+{{Redirect cat...| AssistiveTechnology|\n| 24|  0|      {null, Amoeba}|{{+{{Redirect cat...|        AmoeboidTaxa|\n| 25|  0|                null|{{Environmental a...|              Autism|\n| 27|  0|{null, History of...|{{+{{Redirect cat...|      AlbaniaHistory|\n| 29|  0|{null, Demographi...|{{+{{Redirect cat...|       AlbaniaPeople|\n| 30|  0|{null, As We May ...|{{+{{R category s...|        AsWeMayThink|\n| 35|  0|{null, Politics o...|{{+{{R category s...|   AlbaniaGovernment|\n| 36|  0|{null, Economy of...|{{+{{R category s...|      AlbaniaEconomy|\n| 39|  0|                null|{{/* Trees */  De...|              Albedo|\n| 40|  0|{null, Afroasiati...|{{+{{R category s...|AfroAsiaticLanguages|\n| 42|  0|{null, Constructe...|{null, {null, nul...|  ArtificalLanguages|\n+---+---+--------------------+--------------------+--------------------+\nonly showing top 20 rows\n\nimport org.apache.spark.sql.SparkSession\nimport com.databricks.spark.xml._\n\u001b[1m\u001b[34mspark\u001b[0m: \u001b[1m\u001b[32morg.apache.spark.sql.SparkSession\u001b[0m = org.apache.spark.sql.SparkSession@d0b75e0\n\u001b[1m\u001b[34mwk_raw\u001b[0m: \u001b[1m\u001b[32morg.apache.spark.sql.DataFrame\u001b[0m = [id: bigint, ns: bigint ... 3 more fields]\n"
+          }
+        ]
+      },
+      "apps": [],
+      "runtimeInfos": {
+        "jobUrl": {
+          "propertyName": "jobUrl",
+          "label": "SPARK JOB",
+          "tooltip": "View in Spark web UI",
+          "group": "spark",
+          "values": [
+            {
+              "jobUrl": "http://eco-ubt.hitronhub.home:4040/jobs/job?id=0",
+              "$$hashKey": "object:157"
+            },
+            {
+              "jobUrl": "http://eco-ubt.hitronhub.home:4040/jobs/job?id=1",
+              "$$hashKey": "object:158"
+            }
+          ],
+          "interpreterSettingId": "spark"
+        }
+      },
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1618013330124_1140977648",
+      "id": "paragraph_1617785665778_2104427173",
+      "dateCreated": "2021-04-09T17:08:50-0700",
+      "dateStarted": "2021-04-13T02:21:42-0700",
+      "dateFinished": "2021-04-13T03:00:06-0700",
+      "status": "FINISHED",
+      "focus": true,
+      "$$hashKey": "object:56"
+    },
+    {
+      "text": "%spark\nwk_raw.write.mode(\"overwrite\").parquet(\"hdfs://localhost:9000/data/wk_raw_parquet/\")",
+      "user": "anonymous",
+      "dateUpdated": "2021-04-14T12:51:34-0700",
+      "progress": 0,
+      "config": {
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12,
+        "editorMode": "ace/mode/scala",
+        "fontSize": 9,
+        "results": {},
+        "enabled": true,
+        "editorHide": false
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "ERROR",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "<console>:25: \u001b[31merror: \u001b[0mnot found: value wk_raw\n       wk_raw.write.mode(\"overwrite\").parquet(\"hdfs://localhost:9000/data/wk_raw_parquet/\")\n       ^\n"
+          }
+        ]
+      },
+      "apps": [],
+      "runtimeInfos": {},
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1618013330125_1838127208",
+      "id": "paragraph_1617822643885_310688983",
+      "dateCreated": "2021-04-09T17:08:50-0700",
+      "dateStarted": "2021-04-14T12:51:34-0700",
+      "dateFinished": "2021-04-14T12:51:44-0700",
+      "status": "ERROR",
+      "$$hashKey": "object:57"
+    },
+    {
+      "text": "%spark\nval wk_raw = spark.read.parquet(\"hdfs://localhost:9000/data/wk_raw_parquet/\")\nwk_raw.printSchema\nwk_raw.show",
+      "user": "anonymous",
+      "dateUpdated": "2021-04-14T12:52:06-0700",
+      "progress": 0,
+      "config": {
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12,
+        "editorMode": "ace/mode/scala",
+        "fontSize": 9,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "root\n |-- id: long (nullable = true)\n |-- ns: long (nullable = true)\n |-- redirect: struct (nullable = true)\n |    |-- _VALUE: string (nullable = true)\n |    |-- _title: string (nullable = true)\n |-- revision: struct (nullable = true)\n |    |-- comment: struct (nullable = true)\n |    |    |-- _VALUE: string (nullable = true)\n |    |    |-- _deleted: string (nullable = true)\n |    |-- contributor: struct (nullable = true)\n |    |    |-- _VALUE: string (nullable = true)\n |    |    |-- _deleted: string (nullable = true)\n |    |    |-- id: long (nullable = true)\n |    |    |-- ip: string (nullable = true)\n |    |    |-- username: string (nullable = true)\n |    |-- format: string (nullable = true)\n |    |-- id: long (nullable = true)\n |    |-- minor: string (nullable = true)\n |    |-- model: string (nullable = true)\n |    |-- parentid: long (nullable = true)\n |    |-- sha1: string (nullable = true)\n |    |-- text: struct (nullable = true)\n |    |    |-- _VALUE: string (nullable = true)\n |    |    |-- _bytes: long (nullable = true)\n |    |    |-- _xml:space: string (nullable = true)\n |    |-- timestamp: timestamp (nullable = true)\n |-- title: string (nullable = true)\n\n+---+---+--------------------+--------------------+--------------------+\n| id| ns|            redirect|            revision|               title|\n+---+---+--------------------+--------------------+--------------------+\n| 10|  0|{null, Computer a...|{{shel, null}, {n...| AccessibleComputing|\n| 12|  0|                null|{{Cleaned up 12 I...|           Anarchism|\n| 13|  0|{null, History of...|{{+{{Redirect cat...|  AfghanistanHistory|\n| 14|  0|{null, Geography ...|{{+{{Redirect cat...|AfghanistanGeography|\n| 15|  0|{null, Demographi...|{{+{{Redirect cat...|   AfghanistanPeople|\n| 18|  0|{null, Communicat...|{{+{{Redirect cat...|AfghanistanCommun...|\n| 19|  0|{null, Transport ...|{{+{{R category s...|AfghanistanTransp...|\n| 20|  0|{null, Afghan Arm...|{{+{{R category s...| AfghanistanMilitary|\n| 21|  0|{null, Foreign re...|{{+{{R category s...|AfghanistanTransn...|\n| 23|  0|{null, Assistive ...|{{+{{Redirect cat...| AssistiveTechnology|\n| 24|  0|      {null, Amoeba}|{{+{{Redirect cat...|        AmoeboidTaxa|\n| 25|  0|                null|{{Environmental a...|              Autism|\n| 27|  0|{null, History of...|{{+{{Redirect cat...|      AlbaniaHistory|\n| 29|  0|{null, Demographi...|{{+{{Redirect cat...|       AlbaniaPeople|\n| 30|  0|{null, As We May ...|{{+{{R category s...|        AsWeMayThink|\n| 35|  0|{null, Politics o...|{{+{{R category s...|   AlbaniaGovernment|\n| 36|  0|{null, Economy of...|{{+{{R category s...|      AlbaniaEconomy|\n| 39|  0|                null|{{/* Trees */  De...|              Albedo|\n| 40|  0|{null, Afroasiati...|{{+{{R category s...|AfroAsiaticLanguages|\n| 42|  0|{null, Constructe...|{null, {null, nul...|  ArtificalLanguages|\n+---+---+--------------------+--------------------+--------------------+\nonly showing top 20 rows\n\n\u001b[1m\u001b[34mwk_raw\u001b[0m: \u001b[1m\u001b[32morg.apache.spark.sql.DataFrame\u001b[0m = [id: bigint, ns: bigint ... 3 more fields]\n"
+          }
+        ]
+      },
+      "apps": [],
+      "runtimeInfos": {
+        "jobUrl": {
+          "propertyName": "jobUrl",
+          "label": "SPARK JOB",
+          "tooltip": "View in Spark web UI",
+          "group": "spark",
+          "values": [
+            {
+              "jobUrl": "http://eco-ubt.hitronhub.home:4040/jobs/job?id=0",
+              "$$hashKey": "object:181"
+            },
+            {
+              "jobUrl": "http://eco-ubt.hitronhub.home:4040/jobs/job?id=1",
+              "$$hashKey": "object:182"
+            }
+          ],
+          "interpreterSettingId": "spark"
+        }
+      },
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1618346283246_536045081",
+      "id": "paragraph_1618346283246_536045081",
+      "dateCreated": "2021-04-13T13:38:03-0700",
+      "dateStarted": "2021-04-14T12:52:06-0700",
+      "dateFinished": "2021-04-14T12:52:21-0700",
+      "status": "FINISHED",
+      "$$hashKey": "object:58"
+    },
+    {
+      "text": "%spark\nval wk_df1 = wk_raw.select($\"id\", $\"ns\", $\"redirect._title\".alias(\"redirect\"), $\"revision\", $\"title\")\nval wk_df2 = wk_df1.select($\"id\", $\"title\", $\"ns\", $\"redirect\", $\"revision.id\".alias(\"rev_id\"), $\"revision.parentid\".alias(\"rev_parentid\"), $\"revision.text\".alias(\"rev_text\"), $\"revision.contributor\".alias(\"rev_contributor\"), $\"revision.comment\".alias(\"rev_comment\"), $\"revision.timestamp\".alias(\"rev_timestamp\"), $\"revision.format\".alias(\"rev_foramt\"), $\"revision.model\".alias(\"rev_model\"), $\"revision.minor\".alias(\"rev_minor\"), $\"revision.sha1\".alias(\"rev_sha1\"))\nval wk_df3 = wk_df2.select($\"id\", $\"title\", $\"ns\", $\"redirect\", $\"rev_id\", $\"rev_parentid\", $\"rev_text\", $\"rev_contributor\", $\"rev_comment._VALUE\".alias(\"rev_comment\"), $\"rev_comment._deleted\".alias(\"rev_comment_status\"), $\"rev_timestamp\", $\"rev_foramt\", $\"rev_model\", $\"rev_minor\", $\"rev_sha1\")\nval wk_df4 = wk_df3.select($\"id\", $\"title\", $\"ns\", $\"redirect\", $\"rev_id\", $\"rev_parentid\".alias(\"rev_pid\"), $\"rev_text\", $\"rev_contributor.id\".alias(\"rev_ctr_id\"), $\"rev_contributor.ip\".alias(\"rev_ctr_ip\"), $\"rev_contributor.username\".alias(\"rev_ctr_user\"), $\"rev_contributor._deleted\".alias(\"rev_ctr_st\"), $\"rev_comment\".alias(\"rev_cmt\"), $\"rev_comment_status\".alias(\"rev_cmt_st\"), $\"rev_timestamp\".alias(\"rev_ts\"), $\"rev_foramt\", $\"rev_model\", $\"rev_sha1\")\nval wk_df5 = wk_df4.select($\"id\", $\"title\", $\"ns\", $\"redirect\", $\"rev_id\", $\"rev_pid\", $\"rev_text._VALUE\".alias(\"rev_text\"), $\"rev_ctr_id\", $\"rev_ctr_ip\", $\"rev_ctr_user\", $\"rev_ctr_st\", $\"rev_cmt\", $\"rev_cmt_st\", $\"rev_ts\", $\"rev_foramt\", $\"rev_model\", $\"rev_sha1\")",
+      "user": "anonymous",
+      "dateUpdated": "2021-04-13T14:18:39-0700",
+      "progress": 0,
+      "config": {
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12,
+        "editorMode": "ace/mode/scala",
+        "fontSize": 9,
+        "results": {},
+        "enabled": true,
+        "editorHide": false
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "\u001b[1m\u001b[34mwk_df1\u001b[0m: \u001b[1m\u001b[32morg.apache.spark.sql.DataFrame\u001b[0m = [id: bigint, ns: bigint ... 3 more fields]\n\u001b[1m\u001b[34mwk_df2\u001b[0m: \u001b[1m\u001b[32morg.apache.spark.sql.DataFrame\u001b[0m = [id: bigint, title: string ... 12 more fields]\n\u001b[1m\u001b[34mwk_df3\u001b[0m: \u001b[1m\u001b[32morg.apache.spark.sql.DataFrame\u001b[0m = [id: bigint, title: string ... 13 more fields]\n\u001b[1m\u001b[34mwk_df4\u001b[0m: \u001b[1m\u001b[32morg.apache.spark.sql.DataFrame\u001b[0m = [id: bigint, title: string ... 15 more fields]\n\u001b[1m\u001b[34mwk_df5\u001b[0m: \u001b[1m\u001b[32morg.apache.spark.sql.DataFrame\u001b[0m = [id: bigint, title: string ... 15 more fields]\n"
+          }
+        ]
+      },
+      "apps": [],
+      "runtimeInfos": {},
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1618013330125_2061439733",
+      "id": "paragraph_1617785689774_1647087285",
+      "dateCreated": "2021-04-09T17:08:50-0700",
+      "dateStarted": "2021-04-13T14:18:39-0700",
+      "dateFinished": "2021-04-13T14:18:40-0700",
+      "status": "FINISHED",
+      "$$hashKey": "object:59"
+    },
+    {
+      "text": "%spark\nval wk_xml = wk_df5\nval wk_redirect = wk_xml.filter($\"redirect\".isNotNull)\nval wk_article = wk_xml.filter($\"redirect\".isNull)\nval wk_text = wk_article.select($\"id\", $\"rev_text\")\nwk_xml.printSchema\nwk_xml.show",
+      "user": "anonymous",
+      "dateUpdated": "2021-04-13T14:18:44-0700",
+      "progress": 0,
+      "config": {
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12,
+        "editorMode": "ace/mode/scala",
+        "fontSize": 9,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "root\n |-- id: long (nullable = true)\n |-- title: string (nullable = true)\n |-- ns: long (nullable = true)\n |-- redirect: string (nullable = true)\n |-- rev_id: long (nullable = true)\n |-- rev_pid: long (nullable = true)\n |-- rev_text: string (nullable = true)\n |-- rev_ctr_id: long (nullable = true)\n |-- rev_ctr_ip: string (nullable = true)\n |-- rev_ctr_user: string (nullable = true)\n |-- rev_ctr_st: string (nullable = true)\n |-- rev_cmt: string (nullable = true)\n |-- rev_cmt_st: string (nullable = true)\n |-- rev_ts: timestamp (nullable = true)\n |-- rev_foramt: string (nullable = true)\n |-- rev_model: string (nullable = true)\n |-- rev_sha1: string (nullable = true)\n\n+---+--------------------+---+--------------------+----------+----------+--------------------+----------+--------------------+--------------------+----------+--------------------+----------+-------------------+-----------+---------+--------------------+\n| id|               title| ns|            redirect|    rev_id|   rev_pid|            rev_text|rev_ctr_id|          rev_ctr_ip|        rev_ctr_user|rev_ctr_st|             rev_cmt|rev_cmt_st|             rev_ts| rev_foramt|rev_model|            rev_sha1|\n+---+--------------------+---+--------------------+----------+----------+--------------------+----------+--------------------+--------------------+----------+--------------------+----------+-------------------+-----------+---------+--------------------+\n| 10| AccessibleComputing|  0|Computer accessib...|1002250816| 854851586|#REDIRECT [[Compu...|  20842734|                null|                Elli|      null|                shel|      null|2021-01-23 07:15:01|text/x-wiki| wikitext|kmysdltgexdwkv2xs...|\n| 12|           Anarchism|  0|                null|1013150971|1012575906|{{short descripti...|  28331428|                null|             Grimes2|      null|Cleaned up 12 ISB...|      null|2021-03-20 02:19:46|text/x-wiki| wikitext|cmkzk05pwq3v7z75j...|\n| 13|  AfghanistanHistory|  0|History of Afghan...| 783865149|  74466652|#REDIRECT [[Histo...|   9784415|                null|          Tom.Reding|      null|+{{Redirect categ...|      null|2017-06-04 21:18:18|text/x-wiki| wikitext|iv7s0lr40b17x33tf...|\n| 14|AfghanistanGeography|  0|Geography of Afgh...| 783865160| 407008307|#REDIRECT [[Geogr...|   9784415|                null|          Tom.Reding|      null|+{{Redirect categ...|      null|2017-06-04 21:18:23|text/x-wiki| wikitext|39r4w8qg62iexlysk...|\n| 15|   AfghanistanPeople|  0|Demographics of A...| 783865293| 616420354|#REDIRECT [[Demog...|   9784415|                null|          Tom.Reding|      null|+{{Redirect categ...|      null|2017-06-04 21:19:42|text/x-wiki| wikitext|fncm9bh9l25bmvyzq...|\n| 18|AfghanistanCommun...|  0|Communications in...| 783865299|  74466499|#REDIRECT [[Commu...|   9784415|                null|          Tom.Reding|      null|+{{Redirect categ...|      null|2017-06-04 21:19:45|text/x-wiki| wikitext|q8gdi8070w6yitd4h...|\n| 19|AfghanistanTransp...|  0|Transport in Afgh...| 783821589| 409266982|#REDIRECT [[Trans...|   9784415|                null|          Tom.Reding|      null|+{{R category she...|      null|2017-06-04 14:42:11|text/x-wiki| wikitext|miah0hk4ws6ctake8...|\n| 20| AfghanistanMilitary|  0| Afghan Armed Forces| 783821738| 558328133|#REDIRECT [[Afgha...|   9784415|                null|          Tom.Reding|      null|+{{R category she...|      null|2017-06-04 14:43:11|text/x-wiki| wikitext|j013t2shx5j3p2gq4...|\n| 21|AfghanistanTransn...|  0|Foreign relations...| 783821743|  46448859|#REDIRECT [[Forei...|   9784415|                null|          Tom.Reding|      null|+{{R category she...|      null|2017-06-04 14:43:14|text/x-wiki| wikitext|80xx3tzgvcdioufir...|\n| 23| AssistiveTechnology|  0|Assistive technology| 783865310|  74466798|#REDIRECT [[Assis...|   9784415|                null|          Tom.Reding|      null|+{{Redirect categ...|      null|2017-06-04 21:19:50|text/x-wiki| wikitext|f0x0fdqkexsha1xdm...|\n| 24|        AmoeboidTaxa|  0|              Amoeba| 783865319| 627604809|#REDIRECT [[Amoeb...|   9784415|                null|          Tom.Reding|      null|+{{Redirect categ...|      null|2017-06-04 21:19:55|text/x-wiki| wikitext|ehl9qk3qz207n09xw...|\n| 25|              Autism|  0|                null|1013081381|1012815189|{{Short descripti...|  40162657|                null|               DyDx2|      null|Environmental and...|      null|2021-03-19 15:32:47|text/x-wiki| wikitext|fdjkqc2qhlh3dr2ll...|\n| 27|      AlbaniaHistory|  0|  History of Albania| 783865328|  74467016|#REDIRECT [[Histo...|   9784415|                null|          Tom.Reding|      null|+{{Redirect categ...|      null|2017-06-04 21:20:00|text/x-wiki| wikitext|rbhoo26ul5z7m8uw9...|\n| 29|       AlbaniaPeople|  0|Demographics of A...| 783865341|  74466817|#REDIRECT [[Demog...|   9784415|                null|          Tom.Reding|      null|+{{Redirect categ...|      null|2017-06-04 21:20:05|text/x-wiki| wikitext|hc34qmkw4yiceqh6y...|\n| 30|        AsWeMayThink|  0|     As We May Think| 783821752|  74467061|#REDIRECT [[As_We...|   9784415|                null|          Tom.Reding|      null|+{{R category she...|      null|2017-06-04 14:43:17|text/x-wiki| wikitext|l902evpyqkgd67h0j...|\n| 35|   AlbaniaGovernment|  0| Politics of Albania| 783822027|  74467128|#REDIRECT [[Polit...|   9784415|                null|          Tom.Reding|      null|+{{R category she...|      null|2017-06-04 14:45:21|text/x-wiki| wikitext|hnsv8s58ruj7rca9d...|\n| 36|      AlbaniaEconomy|  0|  Economy of Albania| 783822029|  74467158|#REDIRECT [[Econo...|   9784415|                null|          Tom.Reding|      null|+{{R category she...|      null|2017-06-04 14:45:23|text/x-wiki| wikitext|6rq9n647vsyp1nsed...|\n| 39|              Albedo|  0|                null|1008084109|1007236380|{{Short descripti...|  35693804|                null|Flagrant hysteric...|      null|/* Trees */  Dele...|      null|2021-02-21 05:40:47|text/x-wiki| wikitext|j85ypnpkv1qjph66y...|\n| 40|AfroAsiaticLanguages|  0|Afroasiatic langu...| 783822032| 308571542|#REDIRECT [[Afroa...|   9784415|                null|          Tom.Reding|      null|+{{R category she...|      null|2017-06-04 14:45:24|text/x-wiki| wikitext|ickzq7h4e9kumn0f1...|\n| 42|  ArtificalLanguages|  0|Constructed language| 899426448| 876443922|#REDIRECT [[Const...|      null|2001:16A2:4F77:DA...|                null|      null|                null|      null|2019-05-29 16:50:04|text/x-wiki| wikitext|btmq5vs8ieulquadx...|\n+---+--------------------+---+--------------------+----------+----------+--------------------+----------+--------------------+--------------------+----------+--------------------+----------+-------------------+-----------+---------+--------------------+\nonly showing top 20 rows\n\n\u001b[1m\u001b[34mwk_xml\u001b[0m: \u001b[1m\u001b[32morg.apache.spark.sql.DataFrame\u001b[0m = [id: bigint, title: string ... 15 more fields]\n\u001b[1m\u001b[34mwk_redirect\u001b[0m: \u001b[1m\u001b[32morg.apache.spark.sql.Dataset[org.apache.spark.sql.Row]\u001b[0m = [id: bigint, title: string ... 15 more fields]\n\u001b[1m\u001b[34mwk_article\u001b[0m: \u001b[1m\u001b[32morg.apache.spark.sql.Dataset[org.apache.spark.sql.Row]\u001b[0m = [id: bigint, title: string ... 15 more fields]\n\u001b[1m\u001b[34mwk_text\u001b[0m: \u001b[1m\u001b[32morg.apache.spark.sql.DataFrame\u001b[0m = [id: bigint, rev_text: string]\n"
+          }
+        ]
+      },
+      "apps": [],
+      "runtimeInfos": {
+        "jobUrl": {
+          "propertyName": "jobUrl",
+          "label": "SPARK JOB",
+          "tooltip": "View in Spark web UI",
+          "group": "spark",
+          "values": [
+            {
+              "jobUrl": "http://eco-ubt.hitronhub.home:4040/jobs/job?id=10",
+              "$$hashKey": "object:205"
+            }
+          ],
+          "interpreterSettingId": "spark"
+        }
+      },
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1618346157717_1048601404",
+      "id": "paragraph_1618346157717_1048601404",
+      "dateCreated": "2021-04-13T13:35:57-0700",
+      "dateStarted": "2021-04-13T14:18:44-0700",
+      "dateFinished": "2021-04-13T14:18:44-0700",
+      "status": "FINISHED",
+      "$$hashKey": "object:60"
+    },
+    {
+      "text": "%spark\nwk_text.write.mode(\"overwrite\").parquet(\"hdfs://localhost:9000/data/wk_text_parquet/\")\nwk_article.write.mode(\"overwrite\").parquet(\"hdfs://localhost:9000/data/wk_article_parquet/\")\nwk_redirect.write.mode(\"overwrite\").parquet(\"hdfs://localhost:9000/data/wk_redirect_parquet/\")",
+      "user": "anonymous",
+      "dateUpdated": "2021-04-13T13:34:59-0700",
+      "progress": 100,
+      "config": {
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12,
+        "editorMode": "ace/mode/scala",
+        "fontSize": 9,
+        "results": {},
+        "enabled": true,
+        "editorHide": false
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": []
+      },
+      "apps": [],
+      "runtimeInfos": {
+        "jobUrl": {
+          "propertyName": "jobUrl",
+          "label": "SPARK JOB",
+          "tooltip": "View in Spark web UI",
+          "group": "spark",
+          "values": [
+            {
+              "jobUrl": "http://eco-ubt.hitronhub.home:4040/jobs/job?id=2",
+              "$$hashKey": "object:217"
+            }
+          ],
+          "interpreterSettingId": "spark"
+        }
+      },
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1618013330125_1202060156",
+      "id": "paragraph_1617785713438_1486246625",
+      "dateCreated": "2021-04-09T17:08:50-0700",
+      "dateStarted": "2021-04-13T10:39:41-0700",
+      "dateFinished": "2021-04-13T10:43:15-0700",
+      "status": "FINISHED",
+      "$$hashKey": "object:61"
+    },
+    {
+      "text": "%spark\n",
+      "user": "anonymous",
+      "dateUpdated": "2021-04-13T03:55:27-0700",
+      "progress": 0,
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": []
+      },
+      "apps": [],
+      "runtimeInfos": {},
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1618188021788_1699386613",
+      "id": "paragraph_1618188021788_1699386613",
+      "dateCreated": "2021-04-11T17:40:21-0700",
+      "dateStarted": "2021-04-13T03:55:27-0700",
+      "dateFinished": "2021-04-13T03:55:27-0700",
+      "status": "FINISHED",
+      "$$hashKey": "object:62"
+    }
+  ],
+  "name": "STEP1 XML Parsing",
+  "id": "2G2PPFG72",
+  "defaultInterpreterGroup": "spark",
+  "version": "0.9.0",
+  "noteParams": {},
+  "noteForms": {},
+  "angularObjects": {},
+  "config": {
+    "isZeppelinNotebookCronEnable": false,
+    "looknfeel": "default",
+    "personalizedMode": "false"
+  },
+  "info": {},
+  "path": "/STEP1 XML Parsing"
+}
